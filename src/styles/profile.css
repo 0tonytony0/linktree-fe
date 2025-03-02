@@ -1,0 +1,571 @@
+.profile-container {
+    background-color: transparent;
+    padding: 20px;
+    max-width: 550px;
+    margin: auto;
+}
+
+.profile-title h2 , .banner-section h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: 20px;
+}
+
+.profile-description {
+    background-color: #fff;
+    border-radius: 20px;
+    margin-top: 20px;
+    width: 100%;
+    padding: 15px;
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-direction: row;
+    height: 80px;
+    margin-bottom: 20px;
+}
+
+.avatar {
+    width: 70px;
+    height: 90%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #e0e0e0;
+}
+
+.img-selection {
+    width: 80%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.pick-image,
+.remove-img,
+.toggle-btn,
+.add-btn {
+    border: none;
+    cursor: pointer;
+    font-size: 0.8rem;
+    margin: 3px;
+}
+
+.pick-image {
+    background-color: #28A263;
+    color: #fff;
+    height: 50%;
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.remove-img {
+    background-color: #e0e0e0;
+    color: #6b7280;
+    height: 50%;
+    border-radius: 50px;
+    text-align: center;
+    width: 100%;
+}
+
+.profile-content {
+    background-color: #fff;
+}
+
+.profile-content .input-field {
+    width: 100%;
+    padding: 12px;
+    border-radius: 20px;
+    margin-top: 12px;
+    background-color: #e0e0e0;
+    border: none;
+}
+
+.text-right{
+    font-size: 0.8rem;
+    font-weight: 400;
+    text-align: right;
+}
+
+.links-section,
+.shop-links-section {
+    background-color: #fff;
+    border-radius: 20px;
+    padding: 16px;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.toggle-slider-container {
+    display: flex;
+    background-color: #e0e0e0;
+    border-radius: 50px;
+    width: fit-content;
+    padding: 4px;
+    gap: 4px;
+    margin-bottom: 16px;
+}
+
+.slider-btn {
+    border: none;
+    border-radius: 50px;
+    padding: 8px 16px;
+    font-size: 0.7rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    background-color: transparent;
+    color: #6b7280;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.slider-btn.active {
+    background-color: #28A263;
+    color: #fff;
+}
+
+.add-btn {
+    width: 100%;
+    padding: 5px;
+    border: none;
+    border-radius: 20px;
+    background-color: #28A263;
+    color: #fff;
+    font-size: 13px;
+    cursor: pointer;
+    margin-bottom: 16px;
+}
+
+.list-container {
+    max-height: 200px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.list-container::-webkit-scrollbar {
+    display: none;
+}
+
+.list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #e0e0e0;
+    padding: 12px;
+    border-radius: 12px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    outline: none;
+    transition: background-color 0.3s;
+}
+
+.list-item:hover {
+    background-color: #979d8f13;
+}
+
+.list-item:focus {
+    border: 2px solid #28A263;
+}
+
+.item-details {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.item-title {
+    font-weight: 510;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.item-url {
+    font-size: 0.7rem;
+    color: #303033fa;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.edit-icon {
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+.click-stats {
+    font-size: 0.7rem;
+    color: #01030ac3;
+}
+
+.item-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Toggle Switch */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 34px;
+    height: 18px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    border-radius: 34px;
+    transition: 0.4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 14px;
+    width: 14px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    border-radius: 50%;
+    transition: 0.4s;
+}
+
+input:checked + .slider {
+    background-color: #28A263;
+}
+
+input:checked + .slider:before {
+    transform: translateX(16px);
+}
+
+/* Delete Icon */
+.delete-icon {
+    cursor: pointer;
+    color: #17161662;
+    font-size: 1.2rem;
+}
+
+
+/* Modal Overlay */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.623); /* Dimmed background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fff;
+    padding: 20px 30px;
+    border-radius: 10px;
+    width: 400px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+/* Modal Header Toggle */
+.modal-header-toggle {
+    display: flex;
+    width: 50%;
+    /* justify-content: center; */
+    gap: 10px;
+    margin-bottom: 20px;
+    background-color: #f1f1f1;
+    border-radius: 30px;
+    padding: 5px;
+}
+
+.modal-header-toggle button{
+    width: 50%;
+}
+
+/* Modal Tabs */
+.modal-tab {
+    border: none;
+    padding: 5px 5px;
+    border-radius: 30px;
+    font-weight: 300;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* gap: 8px; */
+    background-color: transparent;
+    color: #000000;
+    opacity: 0.6;
+    cursor: default;
+}
+
+/* Active Tab */
+.modal-tab.active {
+    background-color: #28A263;
+    color: white;
+    opacity: 1;
+}
+
+/* Disabled Tab */
+.modal-tab:disabled {
+    cursor: not-allowed;
+}
+
+.input-group-1 , .input-group-2 {
+    display: flex;
+    flex-direction: row;
+    margin: 3px;
+}
+/* Input Fields */
+.m-input-field {
+    width: 80%;
+    padding: 10px;
+    /* margin-bottom: 15px; */
+    border: 1px solid #f1f1f1;
+    background-color: #f1f1f1;
+    border-radius: 40px;
+    font-size: 0.7rem;
+}
+
+/* Action Icons (Share & Delete) */
+.action-icons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    /* margin-bottom: 15px; */
+}
+
+.icon-share, .icon-delete {
+    font-size: 1rem;
+    cursor: pointer;
+    transition: color 0.3s;
+    
+}
+
+.icon-share:hover {
+    color: #28A263;
+}
+
+.icon-delete:hover {
+    color: #dc3545;
+}
+
+/* Toggle Switch */
+.add-to-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+    /* font-size: 1rem; */
+}
+
+.m-switch {
+    position: relative;
+    display: inline-block;
+    width: 42px;
+    height: 24px;
+}
+
+.m-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.m-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    border-radius: 24px;
+    transition: 0.4s;
+}
+
+.m-slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    border-radius: 50%;
+    transition: 0.4s;
+}
+
+input:checked + .m-slider {
+    background-color: #28A263;
+}
+
+input:checked + .m-slider:before {
+    transform: translateX(18px);
+}
+
+/* Modal Buttons */
+.modal-buttons {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.m-ok-btn {
+    padding: 5px 20px;
+    border: none;
+    border-radius: 40px;
+    font-weight: 400;
+    cursor: pointer;
+    background-color: #28A263;
+    color: white;
+
+}
+
+.m-ok-btn:hover {
+    background-color: #218838;
+}
+
+/* Container */
+.banner-container {
+    width: 100%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 20px;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  /* Banner Section */
+  .banner {
+    border-radius: 20px;
+    padding: 30px 20px;
+    text-align: center;
+    color: white;
+  }
+  
+  /* Avatar */
+  .b-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #e0e0e0;
+    margin: 0 auto 15px;
+    background-image: url('https://via.placeholder.com/100'); /* Replace with avatar */
+    background-size: cover;
+    background-position: center;
+  }
+  
+  /* Username */
+  .b-username {
+    font-size: 1.2rem;
+    margin: 5px 0;
+  }
+  
+  /* Handle */
+  .handle {
+    font-size: 0.9rem;
+    opacity: 0.8;
+  }
+  
+  /* Custom Background Color Section */
+  .color-picker-section {
+    margin-top: 20px;
+  }
+  
+  .color-picker-section h4 {
+    margin-bottom: 10px;
+    font-size: 1rem;
+  }
+  
+  /* Preset Colors */
+  .preset-colors {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+  
+  .color-circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid #ccc;
+    transition: transform 0.2s ease;
+  }
+  
+  .color-circle:hover {
+    transform: scale(1.1);
+  }
+  
+  /* Custom Color Input */
+  .custom-color-input {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  
+  .custom-color-input input[type='color'] {
+    width: 40px;
+    height: 40px;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+  }
+  
+  .custom-color-input input[type='text'] {
+    width: 100px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+  }
+  
+
+/* Scrollbar Styling */
+.list-container::-webkit-scrollbar,
+.list-container::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+}
+
+.list-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+.list-container::-webkit-scrollbar-thumb {
+    background-color: #e0e0e0;
+}
+
+.list-container::-webkit-scrollbar-thumb:hover {
+    background-color: #999;
+}

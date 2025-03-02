@@ -1,0 +1,10 @@
+.main-content{
+    background-color: #e3e3e36d;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+}
+
+.link-details{
+    width: 55vw;
+}

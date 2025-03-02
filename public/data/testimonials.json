@@ -1,0 +1,30 @@
+[
+    {
+        "name": "John Master",
+        "designation": "Director, Spark.com",
+        "avatar": "/images/avatar.svg",
+        "review": "Amazing tool! Saved me months",
+        "description": "This platform has streamlined my workflow, helping me save valuable time and effort. Highly recommended!"
+    },
+    {
+        "name": "Emily Carter",
+        "designation": "Marketing Head, Brandify",
+        "avatar": "/images/avatar.svg",
+        "review": "Best investment for our company!",
+        "description": "Our marketing team has benefited immensely from using this tool. It’s intuitive, powerful, and a game-changer for content sharing."
+    },
+    {
+        "name": "Michael Lee",
+        "designation": "Freelancer & Content Creator",
+        "avatar": "/images/avatar.svg",
+        "review": "A must-have for creators!",
+        "description": "Managing my online presence has never been easier. The seamless integrations and analytics make a huge difference!"
+    },
+    {
+        "name": "Sophia Martinez",
+        "designation": "CEO, InnovateX",
+        "avatar": "/images/avatar.svg",
+        "review": "Fantastic customer support!",
+        "description": "Not only is the product great, but the support team is outstanding. Quick responses and always willing to help!"
+    }
+]

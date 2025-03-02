@@ -1,0 +1,140 @@
+.mobile-sample{
+    width: 45vw;
+    margin: 20px auto;
+}
+
+.mobile-container {
+    width: 285px;
+    height: 80vh;
+    border-radius: 40px;
+    border: 10px solid black;
+    /* padding: 16px; */
+    background-color: #f9f9f9;
+    overflow: hidden;
+    position: relative; 
+    margin:20px auto;
+
+  }
+  
+  .mobile-header {
+    position: relative;
+    background-color: #4a3f35;
+    border-radius: 0 0 20px 20px;
+    text-align: center;
+    padding: 16px;
+    width: 100%;
+    box-sizing: border-box;
+    height: 30%;
+  }
+  
+  .profile-section{
+    width: 100%;
+    margin: 0 auto;
+    /* align-self: center; */
+    justify-self: center;
+    margin-top: 20px;
+  }
+
+  .profile-section h2{
+    color: #e0e0e0;
+    font-size: 1rem;
+    font-weight: 400;
+    margin-top: 20px;
+  }
+  .share-icon {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    font-size: 20px;
+    cursor: pointer;
+    color: rgb(17, 4, 4);
+    border-radius: 10px;
+    background-color: #e0e0e0;
+    padding: 5px;
+  }
+  
+  .mobile-avatar {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+  }
+  
+  .tab-toggle{
+    width: 60%;
+    margin: 20px auto;
+
+}
+  .tab-toggle button {
+    width: 50%;
+    padding: 5px;
+    border: none;
+    border-radius: 40px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 400;
+    background-color: #e0e0e0;
+  }
+  
+  .tab-toggle .active {
+    background-color: #28A263;
+    color: white;
+  }
+  
+  .m-links-section {
+    width : 80%;
+    height: 270px;
+    margin: 15px auto;
+    overflow-y: auto;
+    scrollbar-width: none;
+    /* overflow-x: hidden; */
+  }
+  
+  .link-item {
+    align-items: center;
+    justify-content: center;
+    background-color: #e0e0e0;
+    padding: 10px;
+    border-radius: 20px;
+    margin-bottom: 8px;
+    font-size: 0.8rem;
+    overflow-wrap: break-word;
+    /* Ensures wrapping */
+    white-space: normal;
+    /* Allows text to wrap */ 
+ 
+  }
+  
+ 
+  .mobile-footer {
+    position: absolute;
+    bottom: 0; /* Pushes footer to the bottom */
+    width: 100%;
+    text-align: center;
+    padding-bottom: 10px;
+    background-color: #f9f9f9; /* Matches container background */
+}
+
+.connect-button {
+    background-color: #28A263;
+    color: white;
+    border: none;
+    padding: 5px;
+    width: 80%;
+    border-radius: 60px;
+    cursor: pointer;
+    margin: 0 auto;
+    font-size: 0.8rem;
+}
+
+.mobile-logo {
+    text-align: center;
+    margin-top: 8px;
+    font-weight: bold;
+}
+
+.mobile-container,
+.tab-toggle button,
+.connect-button,
+.link-item {
+  transition: all 0.3s ease-in-out;
+}

@@ -1,0 +1,93 @@
+/* Sidebar Wrapper */
+.navbar {
+    width: 15vw;
+    height: 100vh;
+    background-color: #f7f7f7; /* Matches main body */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    left: 0;
+    top: 0;
+ 
+    /* border-right: 1px solid #e0e0e0; */
+}
+
+/* Logo Section */
+.navbar-logo {
+    padding: 20px;
+    text-align: center;
+}
+
+.logo-image {
+    width: 120px;
+}
+
+/* Navigation Links */
+.navbar-links {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    margin-bottom: 350px;
+    align-self: center;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 15px ;
+    padding-left: 30px;
+    text-decoration: none;
+    color: #333;
+    /* border-radius: 8px; */
+    transition: background-color 0.3s, color 0.3s;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.nav-link:hover {
+    background-color: #e3e3e36d;
+}
+
+.nav-link.active {
+    background-color: #e3e3e36d;
+    color: #0d9b6b;
+}
+
+/* User Info at Bottom */
+.navbar-user {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 15px;
+    border: 1px solid #090909;
+    background-color: #fff;
+    border-radius: 30px;
+    margin: 30px
+    
+}
+
+.user-icon {
+    font-size: 0.9rem;
+}
+
+/* Main Content Adjustment */
+/* .main-content {
+    margin-left: 220px;
+    padding: 20px;
+    background-color: #f7f7f7;
+    height: 100vh;
+} */
+
+/* Active Link Smooth Blend */
+.nav-link.active:hover {
+    background-color: #c5bdbdb1;
+}
+
+/* Consistent Hover & Active States */
+/* .nav-link:focus {
+    outline: none;
+    background-color: #e6f4ea;
+} */

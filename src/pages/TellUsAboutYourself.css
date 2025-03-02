@@ -1,0 +1,144 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Main Container */
+.about-container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Left Section */
+
+.left-section {
+    width: 70%;
+    padding: 50px;
+    position: relative;
+}
+
+.left-section-main {
+    width: 650px;
+    margin: 70px auto;
+}
+
+.logo {
+    position: absolute;
+    top: 20px;
+    width: 120px;
+}
+
+.left-section-main h1 {
+    font-size: 2.5rem;
+    margin-bottom: 5px;
+}
+
+.left-section-main p {
+    color: #000000;
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+.left-section-main input {
+    font-size: 0.9rem;
+}
+
+
+.username-input {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background-color: #f3f3f3;
+    border-radius: 5px;
+    margin-bottom: 25px;
+    margin-top: 25px;
+    font-size: 1rem;
+}
+
+.category-text {
+    font-size: small;
+    margin-bottom: 15px;
+    margin-top: 25px;
+}
+
+.categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.categories button {
+    font-size: small;
+}
+
+.category {
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    background-color: white;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.category.active,
+.category:hover {
+    background-color: #27ae60;
+    color: white;
+    border-color: #011c0d;
+}
+
+.continue-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #27ae60;
+    color: white;
+    font-size: 0.8rem;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    margin-top: 40px;
+}
+
+.continue-btn:hover {
+    background-color: #1e874b;
+}
+
+/* Right Section */
+
+.right-section {
+    width: 30%;
+    position: relative;
+}
+
+.right-section img {
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
+}
+
+/* Responsive */
+
+@media (max-width: 768px) {
+    .about-container {
+        flex-direction: column;
+    }
+
+    .left-section,
+    .right-section {
+        width: 100%;
+        height: auto;
+    }
+
+    .right-section img {
+        height: 300px;
+    }
+
+    .logo {
+        width: 100px;
+    }
+}

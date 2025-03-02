@@ -1,0 +1,47 @@
+[
+    {
+        "name": "Audiomack",
+        "description": "Add an Audiomack player to your Linktree",
+        "icon": "icons/audiomack.svg"
+    },
+    {
+        "name": "Bandsintown",
+        "description": "Drive ticket sales by listing your events",
+        "icon": "icons/bandsintown.svg"
+    },
+    {
+        "name": "Bonfire",
+        "description": "Display and sell your custom merch",
+        "icon": "icons/bonfire.svg"
+    },
+    {
+        "name": "Books",
+        "description": "Promote books on your Linktree",
+        "icon": "icons/books.svg"
+    },
+    {
+        "name": "Buy Me A Gift",
+        "description": "Let visitors support you with a small gift",
+        "icon": "icons/buymegift.svg"
+    },
+    {
+        "name": "Cameo",
+        "description": "Make impossible fan connections possible",
+        "icon": "icons/cameo.svg"
+    },
+    {
+        "name": "Clubhouse",
+        "description": "Let your community in on the conversation",
+        "icon": "icons/clubhouse.svg"
+    },
+    {
+        "name": "Community",
+        "description": "Build an SMS subscriber list",
+        "icon": "icons/community.svg"
+    },
+    {
+        "name": "Contact Details",
+        "description": "Easily share downloadable contact details",
+        "icon": "icons/contactdetails.svg"
+    }
+]
