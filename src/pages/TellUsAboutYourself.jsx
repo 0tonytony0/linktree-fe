@@ -41,7 +41,8 @@ const TellUsAboutYourself = () => {
     };
 
     return (
-        <div className="about-container">
+        <>
+          <div className="about-container">
             <div className="left-section">
                 <img src={sparkLogo} alt="Spark Logo" className="logo" />
                 <div className='left-section-main'>
@@ -76,10 +77,11 @@ const TellUsAboutYourself = () => {
                 </div>
             </div>
 
-            <div className="right-section">
+            {/* <div className="right-section">
                 <img src={rightImage} alt="Right Section" />
-            </div>
+            </div> */}
         </div>
+        </>
     );
 };
 

@@ -21,7 +21,6 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/signup" element={<WelcomePage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/about" element={<TellUsAboutYourself />} />
         <Route path="/profile" element={<Profile />} />
 
         {/* Routes with Layout */}
