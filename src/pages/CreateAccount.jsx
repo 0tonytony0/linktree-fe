@@ -5,15 +5,7 @@ import rightImage from "../assets/welcome2.jpeg";
 import { Link, useNavigate } from "react-router-dom";
 import { register } from "../services/authService";
 
-const CreateAccount = (setIndex) => {
-  const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    f_name: "",
-    l_name: "",
-    email: "",
-    password: "",
-    agree: false,
-  });
+const CreateAccount = ({updateHandler, formData, setFormData}) => {
 
   const [errors, setErrors] = useState({});
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
@@ -57,8 +49,8 @@ const CreateAccount = (setIndex) => {
   };
 
   // Handle Form Submit
-  const handleSubmit = async (e) => {
-   
+  const handleSubmit = async (data) => {
+   setFormData()
   };
 
   return (
@@ -156,7 +148,7 @@ const CreateAccount = (setIndex) => {
             type="submit"
             className="create-acc"
             disabled={isButtonDisabled}
-            onClick={()=>setIndex(2)}
+            onClick={() =>updateHandler()}
           >
             Create an account
           </button>

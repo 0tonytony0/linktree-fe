@@ -3,29 +3,31 @@ import { Link } from "react-router-dom";
 import "./WelcomePage.css";
 import CreateAccount from "./CreateAccount";
 import TellUsAboutYourself from "./TellUsAboutYourself";
+import Welcome from "../components/Welcome";
 
 const WelcomePage = () => {
   const [index, setIndex] = useState(0);
+  const [formData, setFormData] = useState({
+      f_name: "",
+      l_name: "",
+      email: "",
+      password: "",
+      agree: false,
+    });
+
+    const updateHandler = () => {
+            setIndex((prev) => prev+1);
+    }
+
+    const handleSignUp = (data) => {
+        
+    }
 
   return (
     <div className="welcome-container">
-       {index === 0 &&  (<div className="welcome-content">
-          <img src="images/spark-logo.svg" alt="Spark Logo" className="logo" />
-          <div className="welcome-content-main">
-            <h1>Sign up to your Spark</h1>
-            <h3>Welcome to Spark</h3>
-            {/* Clicking this button will show the CreateAccount component */}
-            <button className="email-btn" onClick={() => setIndex(1) }>
-              Continue with email
-            </button>
-            <p>
-              Already have an account? <Link to="/login">Sign in</Link>
-            </p>
-          </div>
-        </div>)}
-
-        { index === 1 && <CreateAccount setIndex={setIndex}/>}
-        {index === 2 && <TellUsAboutYourself/>}
+       {index === 0 &&  (<Welcome updateHandler={updateHandler}/>)}
+        {index === 1 && <CreateAccount updateHandler={updateHandler} setFormData={setFormData} formData={formData}/>}
+        {index === 2 && <TellUsAboutYourself handleSignUP={handleSignUp}/>}
       
       {/* <TellUsAboutYourself /> */}
 

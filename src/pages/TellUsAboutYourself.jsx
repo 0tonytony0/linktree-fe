@@ -4,8 +4,8 @@ import sparkLogo from '../assets/spark-logo.svg';
 import rightImage from '../assets/welcome2.jpeg';
 import { useNavigate } from 'react-router-dom';
 
-const TellUsAboutYourself = () => {
-    const navigate = useNavigate()
+const TellUsAboutYourself = ({handleSignUp}) => {
+    // const navigate = useNavigate()
     const [username, setUsername] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('');
 
@@ -33,8 +33,8 @@ const TellUsAboutYourself = () => {
             alert('Please enter a username and select a category.');
             return;
         }
-
-        navigate('/main')
+        handleSignUp({username, selectedCategory});
+        // navigate('/main')
         // Navigate to next page or send data to backend
         console.log('Username:', username);
         console.log('Selected Category:', selectedCategory);
