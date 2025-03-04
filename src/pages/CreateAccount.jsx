@@ -3,6 +3,7 @@ import "./CreateAccount.css";
 import logo from "../assets/spark-logo.svg";
 import rightImage from "../assets/welcome2.jpeg";
 import { Link, useNavigate } from "react-router-dom";
+import { register } from "../services/authService";
 
 const CreateAccount = () => {
   const navigate = useNavigate();
@@ -60,29 +61,21 @@ const CreateAccount = () => {
     e.preventDefault();
     if (!isButtonDisabled) {
       try {
-        const response = await fetch(
-          "http://localhost:8000/api/auth/register",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              f_name: formData.firstName,
-              l_name: formData.lastName,
-              email: formData.email,
-              password: formData.password,
-            }),
-          }
-        );
+        const registerData = {
+          f_name: formData.firstName,
+          l_name: formData.lastName,
+          email: formData.email,
+          password: formData.password,
+        };
 
-        const data = await response.json();
-        console.log({ data });
-        if (response.ok) {
+        const userData = await register(registerData);
+
+        console.log({ userData });
+        if (userData) {
           navigate("/about");
           // Redirect or show success message
         } else {
-          setApiError(data.message || "Registration failed");
+          setApiError("Registration failed");
         }
       } catch (error) {
         setApiError("Something went wrong. Please try again.");

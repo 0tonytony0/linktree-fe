@@ -3,13 +3,13 @@ import "../styles/main.css";
 import MobileSample from "../components/MobileSample";
 import Appearance from "../components/Appearance";
 import Profile from "../components/Profile";
-import Settings from "../components/settings";
 import { useLocation } from "react-router-dom";
 import { TAB_LINKS } from "./../utils/constants";
 import "../styles/mobilesample.css";
 import "../styles/profile.css";
 import "../styles/appearance.css";
 import "../styles/settings.css";
+import Settings from "../components/settings";
 
 const Main = () => {
   const [avatar, setAvatar] = useState(null);
