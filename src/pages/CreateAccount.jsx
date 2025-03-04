@@ -90,6 +90,7 @@ const CreateAccount = () => {
         <img src={logo} alt="Spark Logo" className="spark-logo" />
 
         <h1 className="title">Sign up to your Spark</h1>
+        <div className="account-container">
         <div className="account-header">
           <h3>Create an account</h3>
           <a href="/login" className="signin-link">
@@ -181,10 +182,12 @@ const CreateAccount = () => {
             Create an account
           </button>
         </form>
+        </div>
+       
       </div>
-      <div className="right-section">
+      {/* <div className="right-section">
         <img src={rightImage} alt="Right Section" className="right-image" />
-      </div>
+      </div> */}
     </div>
   );
 };

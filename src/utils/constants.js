@@ -5,6 +5,18 @@ export const TAB_LINKS = {
     "SETTINGS" : 'settings'
 }
 
-export const clearAuthData = () => {
-  localStorage.removeItem("token"); 
+export const isAuthenticated = () => {
+  if (typeof window !== "undefined") {
+    const token = localStorage.getItem("accessToken");
+    return token ? token : null;
+  }
+  return null;
+};
+
+export const logout = (navigate) => {
+  if (typeof window !== "undefined") {
+    localStorage.clear();
+    sessionStorage.clear();
+    navigate("/");
+  }
 };

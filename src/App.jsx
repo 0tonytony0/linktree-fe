@@ -8,6 +8,7 @@ import CreateAccount from './pages/CreateAccount';
 import Layout from './layouts/Layout';
 import Main from './pages/Main';
 import Profile from './components/Profile';
+import { ProtectedRoutes } from './routes/protectedRoutes';
 
 
 function App() {
@@ -21,11 +22,10 @@ function App() {
         <Route path="/signup" element={<WelcomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/about" element={<TellUsAboutYourself />} />
-        <Route path="/createacc" element={<CreateAccount />} />
         <Route path="/profile" element={<Profile />} />
 
         {/* Routes with Layout */}
-        <Route path="/main" element={<Layout />}>
+        <Route path="/main" element={<ProtectedRoutes />}>
           <Route index element={<Main />} />
         </Route>
       </Routes>
