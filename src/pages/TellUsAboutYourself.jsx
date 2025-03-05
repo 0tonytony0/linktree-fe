@@ -25,8 +25,9 @@ const TellUsAboutYourself = ({handleSignUp}) => {
     ];
 
     const handleCategoryClick = (category) => {
-        setSelectedCategory(category);
-    };
+        const categoryName = category.label.split(' ').slice(1).join(' ');
+        setSelectedCategory(categoryName);
+      };
 
     const handleContinue = () => {
         if (!username || !selectedCategory) {

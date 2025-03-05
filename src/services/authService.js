@@ -1,4 +1,4 @@
-import customFetch from "./apiClient";
+import customFetch from "./customFetch";
 
 export const login = async (username, password) => {
   return customFetch("auth/login", {
