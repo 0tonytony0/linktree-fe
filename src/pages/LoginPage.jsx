@@ -5,8 +5,12 @@ import { Link, useNavigate } from "react-router-dom";
 import sparkLogo from "../assets/spark-logo.svg";
 import rightSectionImage from "../assets/welcome2.jpeg";
 import { login } from "../services/authService";
+import { useDispatch } from "react-redux";
+import { setUser } from "../store/userSlice";
+import { toast } from "react-toastify";
 
 const LoginPage = () => {
+  const dispatch = useDispatch();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -20,16 +24,17 @@ const LoginPage = () => {
 
   // 🔹 Handle Login Submission
   const handleLogin = async (e) => {
-    e.preventDefault(); // Prevent page refresh
-    setError(""); // Clear previous errors
+    e.preventDefault();
+    setError("");
 
     try {
       const loginData = await login(username, password);
       console.log({ loginData });
-      // 🔹 Redirect to Dashboard or Home
-      navigate("/dashboard"); // Change this to your desired route
+      dispatch(setUser(loginData.user));
+      toast.success("Login successful! 🎉");
+      navigate("/main?tab=links");
     } catch (err) {
-      setError(err.message);
+      toast.error(err.message || "Login failed. Please try again.");
     }
   };
 

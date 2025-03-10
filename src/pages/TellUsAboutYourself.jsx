@@ -1,89 +1,90 @@
-import React, { useState } from 'react';
-import './TellUsAboutYourself.css';
-import sparkLogo from '../assets/spark-logo.svg';
-import rightImage from '../assets/welcome2.jpeg';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import "./TellUsAboutYourself.css";
+import sparkLogo from "../assets/spark-logo.svg";
+import Main from "./Main";
+import { useNavigate } from "react-router-dom";
 
-const TellUsAboutYourself = ({handleSignUp}) => {
-    // const navigate = useNavigate()
-    const [username, setUsername] = useState('');
-    const [selectedCategory, setSelectedCategory] = useState('');
+const TellUsAboutYourself = ({ handleSignUp = () => {} }) => {
+  const [username, setUsername] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const navigate = useNavigate();
 
-    const categories = [
-        { label: '💼 Business' },
-        { label: '🎨 Creative' },
-        { label: '📚 Education' },
-        { label: '🎵 Entertainment' },
-        { label: '🧪 Fashion & Beauty' },
-        { label: '🍕 Food & Beverage' },
-        { label: '⚖️ Government & Politics' },
-        { label: '🍎 Health & Wellness' },
-        { label: '💖 Non-Profit' },
-        { label: '💟 Other' },
-        { label: '💻 Tech' },
-        { label: '✈️ Travel & Tourism' }
-    ];
+  const categories = [
+    { label: "💼 Business" },
+    { label: "🎨 Creative" },
+    { label: "📚 Education" },
+    { label: "🎵 Entertainment" },
+    { label: "🧪 Fashion & Beauty" },
+    { label: "🍕 Food & Beverage" },
+    { label: "⚖️ Government & Politics" },
+    { label: "🍎 Health & Wellness" },
+    { label: "💖 Non-Profit" },
+    { label: "💟 Other" },
+    { label: "💻 Tech" },
+    { label: "✈️ Travel & Tourism" },
+  ];
 
-    const handleCategoryClick = (category) => {
-        const categoryName = category.label.split(' ').slice(1).join(' ');
-        setSelectedCategory(categoryName);
-      };
+  const handleCategoryClick = (category) => {
+    if (!category || !category.label) return;
+    setSelectedCategory(category.label);
+  };
 
-    const handleContinue = () => {
-        if (!username || !selectedCategory) {
-            alert('Please enter a username and select a category.');
-            return;
-        }
-        handleSignUp({username, selectedCategory});
-        // navigate('/main')
-        // Navigate to next page or send data to backend
-        console.log('Username:', username);
-        console.log('Selected Category:', selectedCategory);
-    };
+  const handleContinue = (event) => {
+    event.preventDefault();
+    if (!username.trim() || !selectedCategory) {
+      alert("Please enter a username and select a category.");
+      return;
+    }
 
-    return (
-        <>
-          <div className="about-container">
-            <div className="left-section">
-                <img src={sparkLogo} alt="Spark Logo" className="logo" />
-                <div className='left-section-main'>
+    const signupData = { username, selectedCategory };
+    console.log("🚀 Sending sign-up data:", signupData);
+    console.log('callign signUpdata ')
+    handleSignUp(signupData);
 
-                    <h1>Tell us about yourself</h1>
-                    <p>For a personalized Spark experience</p>
+    // navigate("/main");
+  };
 
-                    <input
-                        type="text"
-                        placeholder="Tell us your username"
-                        className="username-input"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                    />
+  return (
+    <div className="about-container">
+      <div className="left-section">
+        <img src={sparkLogo} alt="Spark Logo" className="logo" />
+        <div className="left-section-main">
+          <h1>Tell us about yourself</h1>
+          <p>For a personalized Spark experience</p>
 
-                    <p className="category-text">Select one category that best describes your Linktree :</p>
+          <input
+            type="text"
+            placeholder="Tell us your username"
+            className="username-input"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
 
-                    <div className="categories">
-                        {categories.map((cat) => (
-                            <button
-                                key={cat.label}
-                                className={`category ${selectedCategory === cat.label ? 'active' : ''}`}
-                                onClick={() => handleCategoryClick(cat.label)} >
-                                {cat.label}
-                            </button>
-                        ))}
-                    </div>
+          <p className="category-text">
+            Select one category that best describes your Linktree:
+          </p>
 
-                    <button className="continue-btn" onClick={handleContinue}>
-                        Continue
-                    </button>
-                </div>
-            </div>
+          <div className="categories">
+            {categories.map((cat) => (
+              <button
+                key={cat.label}
+                className={`category ${
+                  selectedCategory === cat.label ? "active" : ""
+                }`}
+                onClick={() => handleCategoryClick(cat)}
+              >
+                {cat.label}
+              </button>
+            ))}
+          </div>
 
-            {/* <div className="right-section">
-                <img src={rightImage} alt="Right Section" />
-            </div> */}
+          <button className="continue-btn" onClick={handleContinue}>
+            Create Account
+          </button>
         </div>
-        </>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default TellUsAboutYourself;

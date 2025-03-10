@@ -10,14 +10,14 @@
     display: flex;
     justify-content: space-between;
     height: 100vh;
-    width: 100%;
+    width: 100vw;
     overflow: hidden;
 }
 
 /* Left section for text */
 
 .welcome-content {
-    width: 70%;
+    width: 80%;
     padding: 35px 60px;
     display: flex;
     flex-direction: column;
@@ -84,7 +84,7 @@
 /* Right section for image */
 
 .welcome-image {
-    width: 30%;
+    width: 25%;
     height: 100vh;
     overflow: hidden;
 }

@@ -1,5 +1,9 @@
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import { FaShareAlt } from "react-icons/fa";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { getDeviceType } from "../utils/helper";
+import { updateLinkData } from "../services/profileService";
 
 const MobileSample = ({
   avatar,
@@ -8,8 +12,10 @@ const MobileSample = ({
   links,
   shops,
   bgColor,
+  updateLinkClick,
 }) => {
   const [activeTab, setActiveTab] = useState("link");
+  const profileId = useSelector((state) => state.user.profileId);
 
   // Apply layout styles
   const getLayoutStyle = () => {
@@ -31,12 +37,12 @@ const MobileSample = ({
           overflowX: "auto",
           backgroundColor: styles.backgroundColor,
           gap: "7px",
-          width: "100%"
+          width: "100%",
+          margin: "10px",
         };
       default:
         return {}; // Default stack layout
     }
-    
   };
 
   const getButtonStyle = () => {
@@ -80,15 +86,15 @@ const MobileSample = ({
       // Hard Shadow Buttons
       case "hard-shadow-square":
         return {
-            border: "2px solid black",
-            boxShadow: "4px 4px 0px black",
+          border: "2px solid black",
+          boxShadow: "4px 4px 0px black",
         };
 
       case "hard-shadow-rounded":
         return {
-             border: "2px solid black",
-             borderRadius: "10px",
-             boxShadow: "4px 4px 0px black",
+          border: "2px solid black",
+          borderRadius: "10px",
+          boxShadow: "4px 4px 0px black",
         };
 
       case "hard-shadow-circle":
@@ -122,35 +128,49 @@ const MobileSample = ({
         return {
           maskImage: "url('/images/rough-mask.svg')",
           WebkitMaskImage: "url('/images/rough-mask.svg')",
-          borderRadius:"0px"
+          borderRadius: "0px",
         };
 
       case "special-double-outline":
         return {
-          borderRadius:"0px",
+          borderRadius: "0px",
           border: "2px solid black",
           position: "relative",
-          margin:"1px",
+          margin: "1px",
           boxShadow: "0 0 0 5px white, 0 0 0 7px black",
         };
 
       case "special-black-pill":
         return {
-          borderRadius:"40px"
+          borderRadius: "40px",
         };
 
       case "special-right-pill":
         return {
-            borderRadius: "50px 0 0 50px",
+          borderRadius: "50px 0 0 50px",
         };
 
       default:
-        return {
-         
-        };
+        return {};
     }
   };
 
+  const handleShare = () => {
+    navigator.clipboard
+      .writeText(`http://localhost:5173/preview/${profileId}`)
+      .then(() => {
+        toast.success("Link copied to clipboard!", { autoClose: 2000 });
+      })
+      .catch((err) => console.error("Failed to copy:", err));
+  };
+
+  const handleItemClick = async (item, currentTab) => {
+    const isLink = currentTab === "link";
+    const device = getDeviceType();
+    await updateLinkData(item?._id, device, isLink);
+    updateLinkClick(item?._id, currentTab === "link");
+    window.open(item.url, "_blank", "noopener,noreferrer");
+  };
 
   return (
     <div className="mobile-sample">
@@ -166,7 +186,7 @@ const MobileSample = ({
             backgroundColor: bgColor,
           }}
         >
-          <FaShareAlt className="share-icon" />
+          <FaShareAlt className="share-icon" onClick={handleShare} />
           <div className="profile-section">
             <img
               src={avatar || "/images/avatar.svg"}
@@ -183,26 +203,24 @@ const MobileSample = ({
           <button
             className={activeTab === "link" ? "active" : ""}
             onClick={() => setActiveTab("link")}
-            style={{...getButtonStyle(),  backgroundColor:
-            activeTab === "link" ? styles.buttonColor : "#e0e0e0",
-          color: activeTab === "link" ? styles.buttonFontColor : "#000",
-          fontFamily: activeTab === "shop" ? styles.font : styles.font,
-        }}
+            style={{
+              ...getButtonStyle(),
+              backgroundColor:
+                activeTab === "link" ? styles.buttonColor : "#e0e0e0",
+              color: activeTab === "link" ? styles.buttonFontColor : "#000",
+              fontFamily: activeTab === "shop" ? styles.font : styles.font,
+            }}
           >
             Link
           </button>
           <button
             className={activeTab === "shop" ? "active" : ""}
             onClick={() => setActiveTab("shop")}
-            style={{...getButtonStyle(),
+            style={{
+              ...getButtonStyle(),
               backgroundColor:
-                activeTab === "shop"
-                  ? styles.buttonColor
-                  : "#e0e0e0",
-              color:
-                activeTab === "shop"
-                  ? styles.buttonFontColor
-                  : "#000",
+                activeTab === "shop" ? styles.buttonColor : "#e0e0e0",
+              color: activeTab === "shop" ? styles.buttonFontColor : "#000",
               fontFamily: activeTab === "shop" ? styles.font : styles.font,
             }}
           >
@@ -211,9 +229,13 @@ const MobileSample = ({
         </div>
 
         {/* Links section */}
-        <div className="m-links-section" style={getLayoutStyle()} >
+        <div className="m-links-section" style={getLayoutStyle()}>
           {(activeTab === "link" ? links : shops).map((item, index) => (
-            <div key={index} className="link-item">
+            <div
+              key={index}
+              className="link-item "
+              onClick={() => handleItemClick(item, activeTab)}
+            >
               {/* <span className="icon">{}</span> */}
               <p
                 style={{
@@ -236,7 +258,8 @@ const MobileSample = ({
         >
           <button
             className="connect-button"
-            style={{...getButtonStyle(),
+            style={{
+              ...getButtonStyle(),
               backgroundColor: styles.buttonColor || "#28A263",
               color: styles.buttonFontColor || "white",
               fontFamily: styles.font || "Poppins",
@@ -253,4 +276,4 @@ const MobileSample = ({
   );
 };
 
-export default MobileSample;
+export default memo(MobileSample);

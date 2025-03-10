@@ -1,15 +1,8 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-}
-
 /* Main Wrapper */
 .create-account-wrapper {
     display: flex;
     height: 100vh;
-    width: 100vw;
+    width: 100%;
 }
 
 /* Left Section */
@@ -31,15 +24,12 @@
     width: 120px;
 }
 
-.title {
+.acc-left-section .title {
     font-size: 1.9rem;
     font-weight: 700;
     width:100%;
-    /* margin-top: 1rem;
-    margin-bottom: 1.4rem; */
     margin: auto;
     text-align: center;
-    /* justify-self: center */
 }
 
 
@@ -61,6 +51,7 @@
     flex-direction: column;
     width: 75%;
     margin:auto;
+    align-items: center;
 
 }
 

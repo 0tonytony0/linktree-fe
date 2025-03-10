@@ -8,6 +8,7 @@ const initialState = {
   email: "",
   avatar: "",
   isAuthenticated: false,
+  profileId: "",
 };
 
 const userSlice = createSlice({
@@ -15,12 +16,14 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action) => {
+      console.log({ action });
       state.f_name = action.payload.f_name;
       state.l_name = action.payload.l_name;
       state.username = action.payload.username;
       state.email = action.payload.email;
       state.label = action.payload.label;
       state.bio = action.payload.bio;
+      state.profileId = action.payload.profileId;
       state.isAuthenticated = true;
     },
     logoutUser: (state) => {
@@ -28,6 +31,7 @@ const userSlice = createSlice({
       state.email = "";
       state.avatar = "";
       state.isAuthenticated = false;
+      state.profileId = "";
     },
   },
 });

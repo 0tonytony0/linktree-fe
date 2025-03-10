@@ -216,20 +216,20 @@
 }
 
 /* Toggle Switch */
-.switch {
+.m-switch {
     position: relative;
     display: inline-block;
     width: 34px;
     height: 18px;
 }
 
-.switch input {
+.m-switch input {
     opacity: 0;
     width: 0;
     height: 0;
 }
 
-.slider {
+.m-slider {
     position: absolute;
     cursor: pointer;
     top: 0;
@@ -241,7 +241,7 @@
     transition: 0.4s;
 }
 
-.slider:before {
+.m-slider:before {
     position: absolute;
     content: "";
     height: 14px;
@@ -253,11 +253,11 @@
     transition: 0.4s;
 }
 
-input:checked + .slider {
+input:checked + .m-slider {
     background-color: #28A263;
 }
 
-input:checked + .slider:before {
+input:checked + .m-slider:before {
     transform: translateX(16px);
 }
 

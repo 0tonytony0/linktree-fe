@@ -73,21 +73,10 @@
     font-size: 0.9rem;
 }
 
-/* Main Content Adjustment */
-/* .main-content {
-    margin-left: 220px;
-    padding: 20px;
-    background-color: #f7f7f7;
-    height: 100vh;
-} */
 
 /* Active Link Smooth Blend */
 .nav-link.active:hover {
     background-color: #c5bdbdb1;
 }
 
-/* Consistent Hover & Active States */
-/* .nav-link:focus {
-    outline: none;
-    background-color: #e6f4ea;
-} */
+

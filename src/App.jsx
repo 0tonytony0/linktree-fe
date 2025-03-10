@@ -3,12 +3,12 @@ import LandingPage from './pages/LandingPage';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import WelcomePage from './pages/WelcomePage';
 import LoginPage from './pages/LoginPage';
-import TellUsAboutYourself from './pages/TellUsAboutYourself';
-import CreateAccount from './pages/CreateAccount';
-import Layout from './layouts/Layout';
 import Main from './pages/Main';
 import Profile from './components/Profile';
+import ForgotPassword from './components/ForgotPassword';
+import ResetPassword from './components/ResetPassword';
 import { ProtectedRoutes } from './routes/protectedRoutes';
+import Preview from './pages/Preview';
 
 
 function App() {
@@ -22,7 +22,9 @@ function App() {
         <Route path="/signup" element={<WelcomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/profile" element={<Profile />} />
-
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
+        <Route path="/preview/:profileId" element={<Preview />} />
         {/* Routes with Layout */}
         <Route path="/main" element={<ProtectedRoutes />}>
           <Route index element={<Main />} />

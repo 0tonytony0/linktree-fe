@@ -83,10 +83,13 @@
   .m-links-section {
     width : 80%;
     height: 270px;
-    margin: 15px auto;
+    margin: 10px auto;
     overflow-y: auto;
     scrollbar-width: none;
-    /* overflow-x: hidden; */
+    padding: 5px;
+    overflow-x: hidden;
+    cursor: pointer;
+
   }
   
   .link-item {
@@ -98,9 +101,8 @@
     margin-bottom: 8px;
     font-size: 0.8rem;
     overflow-wrap: break-word;
-    /* Ensures wrapping */
     white-space: normal;
-    /* Allows text to wrap */ 
+
  
   }
   

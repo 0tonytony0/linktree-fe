@@ -1,13 +1,13 @@
 export const TAB_LINKS = {
-    "LINKS" : 'links',
-    'APPEARANCE' : 'appearance',
-    'ANALYTICS' : 'analytics',
-    "SETTINGS" : 'settings'
-}
+  LINKS: "links",
+  APPEARANCE: "appearance",
+  ANALYTICS: "analytics",
+  SETTINGS: "settings",
+};
 
 export const isAuthenticated = () => {
   if (typeof window !== "undefined") {
-    const token = localStorage.getItem("accessToken");
+    const token = localStorage.getItem("token");
     return token ? token : null;
   }
   return null;

@@ -1,6 +1,9 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { FaLink, FaStore, FaShareAlt } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
+import { createProfile, getProfile } from "../services/profileService";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 const Profile = ({
   avatar,
@@ -11,13 +14,16 @@ const Profile = ({
   links,
   setLinks,
   shops,
+  bio,
+  setBio,
   setShops,
   bgColor,
   setBgColor,
   customColor,
   setCustomColor,
+  saveHandler,
 }) => {
-  const [bio, setBio] = useState("");
+  const userName = useSelector((state) => state.user.username);
   const [bioCharCount, setBioCharCount] = useState(0);
   const [activeTab, setActiveTab] = useState("link");
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -26,7 +32,7 @@ const Profile = ({
   const [newItemName, setNewItemName] = useState("");
   const [newItemURL, setNewItemURL] = useState("");
   const [isChecked, setIsChecked] = useState(false);
- 
+  const [itemError, setItemError] = useState("");
 
   const presetColors = ["#3B312C", "#FFFFFF", "#000000"];
 
@@ -71,7 +77,10 @@ const Profile = ({
 
   // ✅ Add or Edit Item
   const addItem = () => {
-    if (!newItemName.trim() || !newItemURL.trim()) return;
+    if (!newItemName.trim() || !newItemURL.trim()) {
+      toast.error("Both name and URL are required!");
+      return;
+    }
 
     const newItem = {
       name: newItemName,
@@ -79,21 +88,29 @@ const Profile = ({
       active: true,
       clicks: 0,
     };
+
     const currentItems = activeTab === "link" ? links : shops;
 
     if (isEditMode && editingIndex !== null) {
       currentItems[editingIndex] = newItem;
+      toast.success("Item updated successfully!");
     } else {
       const isDuplicate = currentItems.some(
         (item) => item.name === newItem.name && item.url === newItem.url
       );
-      if (isDuplicate) return alert("Item already exists.");
+      if (isDuplicate) {
+        toast.warning("Item already exists!");
+        return;
+      }
+
       currentItems.push(newItem);
+      toast.success("Item added successfully!");
     }
 
     activeTab === "link"
       ? setLinks([...currentItems])
       : setShops([...currentItems]);
+
     setIsChecked(true);
   };
 
@@ -130,6 +147,17 @@ const Profile = ({
     const newColor = e.target.value;
     setCustomColor(newColor);
     setBgColor(newColor);
+  };
+
+  const handleItemUrl = (val) => {
+    const urlPattern = /^(https?:\/\/)?([\w\d-]+\.)+[\w\d]{2,}(\/.*)?$/; // Basic URL regex
+    setNewItemURL(val);
+
+    if (!urlPattern.test(val)) {
+      setItemError("Invalid URL");
+    } else {
+      setItemError("");
+    }
   };
 
   return (
@@ -224,13 +252,9 @@ const Profile = ({
                 <p className="click-stats">📊 {item.clicks} clicks</p>
               </div>
               <div className="item-actions">
-                <label className="switch">
-                  <input
-                    type="checkbox"
-                    checked={true} // Default ON
-                    onChange={() => {}} // Add logic if needed
-                  />
-                  <span className="slider"></span>
+                <label className="m-switch">
+                  <input type="checkbox" checked={true} />
+                  <span className="m-slider"></span>
                 </label>
                 <MdDelete
                   className="delete-icon"
@@ -253,7 +277,7 @@ const Profile = ({
               className="b-avatar"
             />
             <h3 className="b-username">{title}</h3>
-            <p className="handle">🔥/Shadow Monarch</p>
+            <p className="handle">🔥/{userName}</p>
           </div>
 
           {/* Custom Background Color Section */}
@@ -288,7 +312,9 @@ const Profile = ({
           </div>
         </div>
         {/* Save Button */}
-        <button className="save-button">Save</button>
+        <button className="save-button" onClick={(e) => saveHandler(e)}>
+          Save
+        </button>
       </div>
 
       {isModalOpen && (
@@ -338,7 +364,7 @@ const Profile = ({
               <input
                 type="text"
                 value={newItemURL}
-                onChange={(e) => setNewItemURL(e.target.value)}
+                onChange={(e) => handleItemUrl(e.target.value)}
                 className="m-input-field"
                 placeholder={`${activeTab === "link" ? "Link" : "Shop"} URL`}
               />
@@ -374,10 +400,14 @@ const Profile = ({
                 />
               </div>
             </div>
+            {itemError && <p> {itemError} </p>}
 
             {/* Modal Buttons */}
             <div className="modal-buttons">
-              <button className="m-ok-btn" onClick={closeModal}>
+              <button
+                className="m-ok-btn"
+                onClick={itemError.length === 0 && closeModal}
+              >
                 OK
               </button>
             </div>

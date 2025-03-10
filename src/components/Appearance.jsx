@@ -7,18 +7,18 @@ const layouts = [
 ];
 
 const themes = [
-  { name: "Air Snow", color: "#FFFFFF" },
-  { name: "Air Gray", color: "#D3D3D3" },
-  { name: "Air Smoke", color: "#333333" },
-  { name: "Air Black", color: "#000000" },
-  { name: "Mineral Blue", color: "#B0E0E6" },
-  { name: "Mineral Green", color: "#98FB98" },
-  { name: "Mineral Orange", color: "#FFA07A" },
+  { name: "Air Snow", color: "#FFFFFF", icon: "/images/1.svg" },
+  { name: "Air Smoke", color: "#333333", icon: "/images/2.svg" },
+  { name: "Air Black", color: "#000000", icon: "/images/3.svg" },
+  { name: "Mineral Blue", color: "#B0E0E6", icon: "/images/4.svg" },
+  { name: "Mineral Green", color: "#98FB98", icon: "/images/5.svg" },
+  { name: "Mineral Orange", color: "#FFA07A", icon: "/images/6.svg" },
+  { name: "Air Gray", color: "#D3D3D3", icon: "/images/7.svg" },
 ];
 
-const buttonstyles = [{}]
+const buttonstyles = [{}];
 
-const Appearance = ({ styles, setStyles }) => {
+const Appearance = ({ styles, setStyles, saveHandler }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setStyles((prev) => ({ ...prev, [name]: value }));
@@ -46,7 +46,12 @@ const Appearance = ({ styles, setStyles }) => {
                 setStyles((prev) => ({ ...prev, layout: layout.name }))
               }
             >
-              <img src={`/images/${layout.icon}.svg`} alt="" className="" style={{border:"1px solid black", margin:"10px"}} />
+              <img
+                src={`/images/${layout.icon}.svg`}
+                alt=""
+                className=""
+                style={{ border: "1px solid black", margin: "10px" }}
+              />
 
               <span>{layout.name}</span>
             </button>
@@ -242,9 +247,26 @@ const Appearance = ({ styles, setStyles }) => {
       <div className="section">
         <label>Font:</label>
         <select name="font" value={styles.font} onChange={handleChange}>
+          <option value="Poppins">Poppins</option>
           <option value="DM Sans">DM Sans</option>
           <option value="Arial">Arial</option>
-          <option value="Poppins">Poppins</option>
+          <option value="Roboto">Roboto</option>
+          <option value="Montserrat">Montserrat</option>
+          <option value="Lato">Lato</option>
+          <option value="Open Sans">Open Sans</option>
+          <option value="Inter">Inter</option>
+          <option value="Nunito">Nunito</option>
+          <option value="Raleway">Raleway</option>
+          <option value="Playfair Display">Playfair Display</option>
+          <option value="Merriweather">Merriweather</option>
+          <option value="Oswald">Oswald</option>
+          <option value="Quicksand">Quicksand</option>
+          <option value="Fira Sans">Fira Sans</option>
+          <option value="Ubuntu">Ubuntu</option>
+          <option value="Titillium Web">Titillium Web</option>
+          <option value="Work Sans">Work Sans</option>
+          <option value="Bebas Neue">Bebas Neue</option>
+          <option value="Source Sans Pro">Source Sans Pro</option>
         </select>
 
         <label>Font Color:</label>
@@ -260,13 +282,19 @@ const Appearance = ({ styles, setStyles }) => {
       <h2>Themes</h2>
       <div className="section">
         <div className="theme-options">
-          {themes.map((theme) => (
+          {themes.map((theme, i) => (
             <button
               key={theme.name}
               className={styles.theme === theme.name ? "active" : ""}
-              style={{ backgroundColor: theme.color }}
+              // style={{ backgroundColor: theme.color }}
               onClick={() => handleThemeSelect(theme)}
             >
+              <img
+                src={theme.icon}
+                alt=""
+                className=""
+                style={{ border: "1px solid black", margin: "10px" }}
+              />
               {theme.name}
             </button>
           ))}
@@ -274,7 +302,9 @@ const Appearance = ({ styles, setStyles }) => {
       </div>
 
       {/* Save Button */}
-      <button className="save-button">Save</button>
+      <button className="save-button" onClick={(e) => saveHandler(e)}>
+        Save
+      </button>
     </div>
   );
 };
