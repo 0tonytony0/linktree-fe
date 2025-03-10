@@ -3,7 +3,6 @@ import "../styles/main.css";
 import MobileSample from "../components/MobileSample";
 import Appearance from "../components/Appearance";
 import Profile from "../components/Profile";
-import Settings from "../components/settings";
 import AnalyticsPage from "../components/AnalyticsPage";
 import { useLocation } from "react-router-dom";
 import { TAB_LINKS } from "./../utils/constants";
@@ -20,6 +19,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../store/userSlice";
 import { toast } from "react-toastify";
+import Settings from './../components/Settings';
 
 const Main = () => {
   const dispatch = useDispatch();
