@@ -1,6 +1,7 @@
 import customFetch from "./customFetch";
 
 export const login = async (username, password) => {
+  console.log(username,password);
   return customFetch("auth/login", {
     method: "POST",
     headers: {
