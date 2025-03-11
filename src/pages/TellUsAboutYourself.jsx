@@ -38,7 +38,7 @@ const TellUsAboutYourself = ({ handleSignUp = () => {} }) => {
 
     const signupData = { username, selectedCategory };
     console.log("🚀 Sending sign-up data:", signupData);
-    console.log('callign signUpdata ')
+    // console.log('callign signUpdata ')
     handleSignUp(signupData);
 
     // navigate("/main");
