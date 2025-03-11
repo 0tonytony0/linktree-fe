@@ -60,9 +60,9 @@ const CreateAccount = ({ updateHandler, formData, setFormData }) => {
         <div className="account-container">
           <div className="account-header">
             <h3>Create an account</h3>
-            <a href="/login" className="signin-link">
+            <Link to ="/login" className="signin-link">
               Sign in instead
-            </a>
+            </Link>
           </div>
 
           <form className="account-form" onSubmit={handleSubmit}>
