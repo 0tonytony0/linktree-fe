@@ -1,0 +1,61 @@
+/* --- Analytics Page - Modern & Clean --- */
+
+.analytics-container {
+  padding: var(--space-xl);
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: var(--background);
+  min-height: 100vh;
+}
+
+.analytics-container h2 {
+  font-family: var(--font-premium);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: var(--space-xl);
+}
+
+.analytics-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-lg);
+  margin-bottom: var(--space-xl);
+}
+
+.chart-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  box-shadow: var(--shadow-md);
+  transition: transform 0.2s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.chart-card:hover {
+  transform: translateY(-4px);
+}
+
+.chart-card h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: var(--space-lg);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.chart-wrapper {
+  flex: 1;
+  min-height: 280px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .analytics-summary {
+    grid-template-columns: 1fr;
+  }
+}

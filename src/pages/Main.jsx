@@ -61,13 +61,12 @@ const Main = () => {
       const imageData = await uploadImage(file);
       setAvatar(imageData.imageUrl);
     } catch (err) {
-      console.log(err);
+      toast.error("Image upload failed");
     }
   };
 
   const saveHandler = async (e) => {
     e.preventDefault();
-    console.log({ links });
 
     const formData = {
       title: title,
@@ -87,10 +86,8 @@ const Main = () => {
         await updateProfile(formData);
         toast.success("successfully saved !");
       }
-      console.log({ formData });
     } catch (error) {
       toast.error("Failed to save. Please try again.");
-      console.error(error);
     }
   };
 
@@ -110,12 +107,11 @@ const Main = () => {
         dispatch(setUser({ ...user, profileId: profileData._id }));
         setIsProfileData(true);
       } catch (err) {
-        console.log(err);
+        toast.error("Failed to fetch profile");
       }
     };
     fetchProfile();
   }, []);
-  console.log({ links });
   const updateLinkClick = useCallback((linkId, isLink) => {
     if (isLink) {
       setLinks((prev) =>

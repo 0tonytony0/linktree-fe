@@ -13,6 +13,7 @@ const MobileSample = ({
   shops,
   bgColor,
   updateLinkClick,
+  isPreview = false,
 }) => {
   const [activeTab, setActiveTab] = useState("link");
   const profileId = useSelector((state) => state.user.profileId);
@@ -134,10 +135,11 @@ const MobileSample = ({
       case "special-double-outline":
         return {
           borderRadius: "0px",
-          border: "2px solid black",
+          border: "1px solid black",
           position: "relative",
-          margin: "1px",
-          boxShadow: "0 0 0 5px white, 0 0 0 7px black",
+          margin: "0.5px",
+          boxShadow: "0 0 0 2px white, 0 0 0 3px black",
+          // width: "40%"
         };
 
       case "special-black-pill":
@@ -173,9 +175,9 @@ const MobileSample = ({
   };
 
   return (
-    <div className="mobile-sample">
+    <div className={`mobile-sample ${isPreview ? "is-preview" : ""}`}>
       <div
-        className="mobile-container"
+        className={`mobile-container ${isPreview ? "is-preview" : ""}`}
         style={{
           backgroundColor: styles.backgroundColor,
         }}

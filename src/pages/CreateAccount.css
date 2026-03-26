@@ -1,171 +1,182 @@
-/* Main Wrapper */
+/* --- Create Account Page - Modern Split Screen --- */
+
 .create-account-wrapper {
-    display: flex;
-    height: 100vh;
-    width: 100%;
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  background-color: var(--background);
+  overflow: hidden;
 }
 
-/* Left Section */
+/* Left Section: Registration Form */
 .acc-left-section {
-    margin: auto;
-    width: 70%;
-    padding: 40px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: var(--space-xl);
+  background: var(--surface);
+  position: relative;
+  overflow-y: auto;
 }
 
 .spark-logo {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    width: 120px;
-}
-
-.acc-left-section .title {
-    font-size: 1.9rem;
-    font-weight: 700;
-    width:100%;
-    margin: auto;
-    text-align: center;
-}
-
-
-.account-header {
-    display: flex;
-    width: 100%;
-    max-width: 400px;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.account-header h3 {
-    font-size: 1.2rem;
-    font-weight: 400;
+  position: absolute;
+  top: var(--space-lg);
+  left: var(--space-lg);
+  width: 100px;
+  filter: drop-shadow(var(--shadow-sm));
 }
 
 .account-container {
-    display: flex;
-    flex-direction: column;
-    width: 75%;
-    margin:auto;
-    align-items: center;
+  width: 100%;
+  max-width: 440px;
+  animation: fadeIn 0.6s ease-out;
+}
 
+.account-header {
+  text-align: center;
+  margin-bottom: var(--space-xl);
+}
+
+.account-header h1 {
+  font-family: var(--font-premium);
+  font-size: 2.25rem;
+  color: var(--primary);
+  margin-bottom: var(--space-xs);
+}
+
+.account-header h3 {
+  color: var(--text-muted);
+  font-size: 1rem;
 }
 
 .signin-link {
-    font-size: 0.9rem;
-    color: #27ae60;
-    text-decoration: none;
+  color: var(--primary-light);
+  font-weight: 600;
+  text-decoration: none;
+  margin-left: var(--space-xs);
 }
 
 .signin-link:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .account-form {
-    width: 100%;
-    max-width: 400px;
-    margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
 }
 
-.form-group {
-    margin-bottom: 15px;
+.form-group input {
+  width: 100%;
+  padding: var(--space-md);
+  background: var(--accent);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
 }
 
-.form-group input[type='text'],
-.form-group input[type='email'],
-.form-group input[type='password'] {
-    width: 100%;
-    padding: 10px 10px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    font-size: 0.8rem;
-    transition: border-color 0.2s ease;
+.form-group input:focus {
+  background: var(--surface);
+  border-color: var(--primary-light);
+  box-shadow: 0 0 0 4px rgba(57, 91, 100, 0.1);
 }
 
-input.error {
-    border-color: #e63946;
+.form-group input.error {
+  border-color: var(--error);
+  background: rgba(214, 48, 49, 0.05);
 }
 
 .error-text {
-    color: #e63946;
-    font-size: 0.7rem;
-    margin-top: 4px;
+  color: var(--error);
+  font-size: 0.75rem;
+  margin-top: var(--space-xs);
+  font-weight: 500;
 }
 
 .checkbox-group {
-    display: flex;
-    align-items: flex-start;
-    margin: 25px 0;
-    font-size: 0.7rem;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin: var(--space-md) 0;
 }
 
-.checkbox-group input[type='checkbox'] {
-    margin-right: 10px;
+.checkbox-group input {
+  margin-top: 3px;
 }
 
 .checkbox-group a {
-    color: #1d4ed8;
-    text-decoration: none;
+  color: var(--primary-light);
+  font-weight: 600;
 }
 
 .create-acc {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    border-radius: 15px;
-    font-size: 0.7rem;
-    background-color: #1db954;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+  width: 100%;
+  padding: var(--space-md);
+  background: var(--primary);
+  color: var(--background);
+  border-radius: var(--radius-full);
+  font-size: 1rem;
+  font-weight: 600;
+  box-shadow: var(--shadow-md);
+  margin-top: var(--space-md);
+}
+
+.create-acc:hover:not(:disabled) {
+  background: var(--primary-light);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
 }
 
 .create-acc:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
+  background: var(--text-muted);
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
-.footer-text {
-    margin-top: 40px;
-    font-size: 0.7rem;
-    color: #666;
-    text-align: center;
-}
-
-.footer-text a {
-    color: #1d4ed8;
-    text-decoration: none;
-}
-
-/* Right Section */
+/* Right Section: Visual / Image */
 .right-section {
-    width: 30%;
-    position: relative;
-    overflow: hidden;
+  width: 35%;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
 }
 
-.right-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.right-section::before {
+  content: '';
+  position: absolute;
+  width: 150%;
+  height: 150%;
+  background: radial-gradient(circle, rgba(165, 201, 202, 0.12) 0%, transparent 70%);
+  animation: rotate 25s linear infinite;
 }
 
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
 
 /* Responsive */
+@media (max-width: 1024px) {
+  .right-section { width: 30%; }
+}
+
 @media (max-width: 768px) {
-    .create-account-wrapper {
-        flex-direction: column;
-    }
-
-    .right-section {
-        display: none;
-    }
-
-    .left-section {
-        width: 100%;
-    }
+  .right-section { display: none; }
+  .acc-left-section { padding: var(--space-xl) var(--space-md); }
+  .spark-logo { position: static; margin-bottom: var(--space-xl); }
 }

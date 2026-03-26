@@ -1,10 +1,85 @@
-.main-content{
-    background-color: #e3e3e36d;
-    height: 100vh;
-    display: flex;
-    flex-direction: row;
+/* --- Main Dashboard Container - Responsive Layout --- */
+
+.main-content {
+  display: flex;
+  flex-direction: row;
+  background-color: var(--background);
+  min-height: 100vh;
+  gap: var(--space-xl);
+  padding: 0;
+  overflow: hidden;
 }
 
-.link-details{
-    width: 55vw;
+/* Sidebar Placeholder (for Navbar integration) */
+.navbar + .main-content {
+  flex: 1;
+}
+
+/* Mobile Preview Section (Left) */
+.mobile-sample {
+  flex: 1;
+  max-width: 450px;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--space-xl);
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+/* Editor Section (Right) */
+.link-details {
+  flex: 1.5;
+  padding: var(--space-xl);
+  overflow-y: auto;
+  height: 100vh;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+/* Editor Section Scrollbar */
+.link-details::-webkit-scrollbar {
+  width: 6px;
+}
+
+.link-details::-webkit-scrollbar-thumb {
+  background-color: var(--border);
+  border-radius: var(--radius-full);
+}
+
+/* --- RESPONSIVE ADAPTATION --- */
+
+@media (max-width: 1200px) {
+  .mobile-sample {
+    max-width: 380px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .main-content {
+    flex-direction: column;
+    padding-bottom: 80px; /* Space for Mobile Bottom Nav */
+    overflow: auto;
+  }
+
+  /* Hide Mobile Preview on screens where editing is primary */
+  .mobile-sample {
+    display: none;
+  }
+
+  .link-details {
+    width: 100%;
+    height: auto;
+    padding: var(--space-md);
+    overflow: visible;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    padding-bottom: 70px;
+  }
 }

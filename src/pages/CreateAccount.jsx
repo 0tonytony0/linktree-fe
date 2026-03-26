@@ -3,10 +3,12 @@ import "./CreateAccount.css";
 import logo from "../assets/spark-logo.svg";
 import rightImage from "../assets/welcome2.jpeg";
 import { Link, useNavigate } from "react-router-dom";
+
 const CreateAccount = ({ updateHandler, formData, setFormData }) => {
   const [errors, setErrors] = useState({});
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-  const [apiError, setApiError] = useState(null);
+  // const [apiError, setApiError] = useState(null);
+  const [touchedFields, setTouchedFields] = useState({});
 
   // Regex for validations
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -22,6 +24,12 @@ const CreateAccount = ({ updateHandler, formData, setFormData }) => {
     };
 
     setFormData(updatedFormData);
+
+    setTouchedFields((prev) => ({
+      ...prev,
+      [name]: true,
+    }));
+
     validateForm(updatedFormData);
   };
 
@@ -38,16 +46,38 @@ const CreateAccount = ({ updateHandler, formData, setFormData }) => {
         "The password must be at least 8 characters long* and include at least 1 uppercase, lowercase, number, and special character (@$!%*?&)*";
     }
 
-    if (data.password !== data.confirmPassword)
+    if (!data.confirmPassword) {
+      newErrors.confirmPassword = "Please confirm your password*";
+    } else if (data.password !== data.confirmPassword) {
       newErrors.confirmPassword = "Password did not match*";
+    }
+
+    if (!data.agree) {
+      newErrors.agree = "You must agree to the terms*";
+    }
 
     setErrors(newErrors);
     setIsButtonDisabled(Object.keys(newErrors).length > 0 || !data.agree);
+    return newErrors;
   };
 
   // Handle Form Submit
-  const handleSubmit = async (data) => {
-    setFormData();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const newErrors = validateForm(formData)
+
+    setTouchedFields({
+      f_name: true,
+      l_name: true,
+      email: true,
+      password: true,
+      confirmPassword: true,
+    });
+
+    if (Object.keys(newErrors).length === 0 && formData.agree){
+      updateHandler();
+    }
+    // setFormData();
   };
 
   return (
@@ -60,7 +90,7 @@ const CreateAccount = ({ updateHandler, formData, setFormData }) => {
         <div className="account-container">
           <div className="account-header">
             <h3>Create an account</h3>
-            <Link to ="/login" className="signin-link">
+            <Link to="/login" className="signin-link">
               Sign in instead
             </Link>
           </div>
@@ -75,7 +105,9 @@ const CreateAccount = ({ updateHandler, formData, setFormData }) => {
                 onChange={handleChange}
                 className={errors.f_name ? "error" : ""}
               />
-              {errors.f_name && <p className="error-text">{errors.f_name}</p>}
+              {touchedFields.f_name && errors.f_name && (
+                <p className="error-text">{errors.f_name}</p>
+              )}
             </div>
 
             <div className="form-group">
@@ -97,7 +129,9 @@ const CreateAccount = ({ updateHandler, formData, setFormData }) => {
                 onChange={handleChange}
                 className={errors.email ? "error" : ""}
               />
-              {errors.email && <p className="error-text">{errors.email}</p>}
+              {touchedFields.email && errors.email && (
+                <p className="error-text">{errors.email}</p>
+              )}
             </div>
 
             <div className="form-group">
@@ -105,11 +139,12 @@ const CreateAccount = ({ updateHandler, formData, setFormData }) => {
                 type="password"
                 name="password"
                 placeholder="Password"
+                autoComplete="new-password"
                 value={formData.password}
                 onChange={handleChange}
                 className={errors.password ? "error" : ""}
               />
-              {errors.password && (
+              {touchedFields.password && errors.password && (
                 <p className="error-text">{errors.password}</p>
               )}
             </div>
@@ -119,11 +154,12 @@ const CreateAccount = ({ updateHandler, formData, setFormData }) => {
                 type="password"
                 name="confirmPassword"
                 placeholder="Confirm Password"
+                autoComplete="new-password"
                 value={formData.confirmPassword}
                 onChange={handleChange}
                 className={errors.confirmPassword ? "error" : ""}
               />
-              {errors.confirmPassword && (
+              {touchedFields.confirmPassword && errors.confirmPassword && (
                 <p className="error-text">{errors.confirmPassword}</p>
               )}
             </div>
@@ -140,12 +176,14 @@ const CreateAccount = ({ updateHandler, formData, setFormData }) => {
                 <a href="#">Terms of use</a> and <a href="#">Privacy Policy</a>
               </label>
             </div>
-            {apiError && <p className="error-text">{apiError}</p>}
+            {touchedFields.agree && errors.agree && (
+              <p className="error-text">{errors.agree}</p>
+            )}
             <button
               type="submit"
               className="create-acc"
               disabled={isButtonDisabled}
-              onClick={() => updateHandler()}
+              // onClick={() => updateHandler()}
             >
               Continue
             </button>

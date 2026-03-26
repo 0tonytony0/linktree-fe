@@ -1,14 +1,32 @@
-/* layout.css */
+/* --- Global Layout - Modern & Responsive --- */
+
 .layout {
-    display: flex;
-    height: 100vh;
-    width: 100vw;
-    background-color: #e0e0e0;
+  display: flex;
+  min-height: 100vh;
+  width: 100vw;
+  background-color: var(--background);
+  overflow: hidden;
+}
+
+.body-content {
+  flex: 1;
+  background-color: var(--background);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- RESPONSIVE ADAPTATION --- */
+@media (max-width: 768px) {
+  .layout {
+    flex-direction: column;
+    overflow: auto;
   }
-  
-  
+
   .body-content {
-    background-color: #e3e3e36d;
-    width: 85vw;
-    overflow-y: auto;
+    width: 100%;
+    margin-bottom: 70px; /* Space for the bottom navbar */
+    height: auto;
+    overflow: visible;
   }
+}

@@ -28,13 +28,23 @@ const LoginPage = () => {
     setError("");
 
     try {
-      const loginData = await login(username, password);
-      console.log({ loginData });
-      dispatch(setUser(loginData.user));
-      toast.success("Login successful! 🎉");
-      navigate("/main?tab=links");
+      const res = await login(username, password);
+      // login returns { success, status, data } from customFetch
+      // res.data is the standardized backend response: { success, message, data: { user, token } }
+
+      if (res.success && res.data.success) {
+        const { user: loggedInUser, token } = res.data.data;
+        dispatch(setUser(loggedInUser));
+
+        // Token is already stored by authService.login
+        toast.success("Login successful! 🎉");
+        navigate("/main?tab=links");
+      } else {
+        const errorMsg = res.data?.message || "Login failed. Please check your credentials.";
+        toast.error(errorMsg);
+      }
     } catch (err) {
-      toast.error(err.message || "Login failed. Please try again.");
+      toast.error("Something went wrong. Please check your connection.");
     }
   };
 

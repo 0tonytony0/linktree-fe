@@ -1,9 +1,11 @@
-import React, { useState, useCallback, useEffect } from "react";
-import { FaLink, FaStore, FaShareAlt } from "react-icons/fa";
-import { MdDelete } from "react-icons/md";
-import { createProfile, getProfile } from "../services/profileService";
+import React, { useState, useCallback } from "react";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+
+import ProfileHeader from "./profile/ProfileHeader";
+import LinkManager from "./profile/LinkManager";
+import ProfileBanner from "./profile/ProfileBanner";
+import ProfileModal from "./profile/ProfileModal";
 
 const Profile = ({
   avatar,
@@ -14,9 +16,9 @@ const Profile = ({
   links,
   setLinks,
   shops,
+  setShops,
   bio,
   setBio,
-  setShops,
   bgColor,
   setBgColor,
   customColor,
@@ -24,7 +26,7 @@ const Profile = ({
   saveHandler,
 }) => {
   const userName = useSelector((state) => state.user.username);
-  const [bioCharCount, setBioCharCount] = useState(0);
+  const [bioCharCount, setBioCharCount] = useState(bio?.length || 0);
   const [activeTab, setActiveTab] = useState("link");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -35,10 +37,6 @@ const Profile = ({
   const [itemError, setItemError] = useState("");
 
   const presetColors = ["#3B312C", "#FFFFFF", "#000000"];
-
-  // ✅ Avatar Handlers
-
-  const removeImage = () => setAvatar(null);
 
   // ✅ Bio Handler
   const handleBioChange = (e) => {
@@ -89,7 +87,7 @@ const Profile = ({
       clicks: 0,
     };
 
-    const currentItems = activeTab === "link" ? links : shops;
+    const currentItems = activeTab === "link" ? [...links] : [...shops];
 
     if (isEditMode && editingIndex !== null) {
       currentItems[editingIndex] = newItem;
@@ -107,9 +105,11 @@ const Profile = ({
       toast.success("Item added successfully!");
     }
 
-    activeTab === "link"
-      ? setLinks([...currentItems])
-      : setShops([...currentItems]);
+    if (activeTab === "link") {
+      setLinks(currentItems);
+    } else {
+      setShops(currentItems);
+    }
 
     setIsChecked(true);
   };
@@ -126,21 +126,18 @@ const Profile = ({
   const shareItem = (url) => {
     if (navigator.share) {
       navigator
-        .share({
-          title: "Check this out!",
-          url: url,
-        })
-        .then(() => console.log("Shared successfully"))
+        .share({ title: "Check this out!", url })
+        .then(() => toast.success("Shared successfully"))
         .catch((error) => console.error("Sharing failed", error));
     } else {
       navigator.clipboard.writeText(url);
-      alert("Link copied to clipboard!");
+      toast.info("Link copied to clipboard!");
     }
   };
 
   const handlePresetColor = (color) => {
     setBgColor(color);
-    setCustomColor(color); // Sync custom input with selected color
+    setCustomColor(color);
   };
 
   const handleCustomColor = (e) => {
@@ -150,14 +147,9 @@ const Profile = ({
   };
 
   const handleItemUrl = (val) => {
-    const urlPattern = /^(https?:\/\/)?([\w\d-]+\.)+[\w\d]{2,}(\/.*)?$/; // Basic URL regex
+    const urlPattern = /^(https?:\/\/)?([\w\d-]+\.)+[\w\d]{2,}(\/.*)?$/;
     setNewItemURL(val);
-
-    if (!urlPattern.test(val)) {
-      setItemError("Invalid URL");
-    } else {
-      setItemError("");
-    }
+    setItemError(urlPattern.test(val) ? "" : "Invalid URL");
   };
 
   return (
@@ -166,253 +158,55 @@ const Profile = ({
         <h2>Profile</h2>
       </div>
 
-      {/* Profile Header */}
-      <div className="profile-description">
-        <div className="profile-header">
-          <img src={avatar || "/images/avatar.svg"} alt="" className="avatar" />
-          <div className="img-selection">
-            <input
-              type="file"
-              onChange={onImageChange}
-              className="hidden"
-              id="avatarUpload"
-            />
-            <label htmlFor="avatarUpload" className="pick-image">
-              <p>Pick an image</p>
-            </label>
-            <button onClick={removeImage} className="remove-img">
-              Remove
-            </button>
-          </div>
-        </div>
+      <ProfileHeader
+        avatar={avatar}
+        onImageChange={onImageChange}
+        removeImage={() => setAvatar(null)}
+        title={title}
+        setTitle={setTitle}
+        bio={bio}
+        handleBioChange={handleBioChange}
+        bioCharCount={bioCharCount}
+      />
 
-        <div className="profile-content">
-          <input
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className="input-field"
-            placeholder="Profile Title"
-          />
-          <textarea
-            value={bio}
-            onChange={handleBioChange}
-            className="input-field"
-            placeholder="Bio"
-            rows="3"
-          ></textarea>
-          <div className="text-right">{bioCharCount}/80</div>
-        </div>
-      </div>
+      <LinkManager
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        links={links}
+        shops={shops}
+        openModal={openModal}
+        deleteItem={deleteItem}
+      />
 
-      {/* LINKS & SHOPS */}
-      <div className="links-section">
-        <div className="toggle-slider-container">
-          <button
-            className={`slider-btn ${activeTab === "link" ? "active" : ""}`}
-            onClick={() => setActiveTab("link")}
-          >
-            <FaLink /> Add Link
-          </button>
-          <button
-            className={`slider-btn ${activeTab === "shop" ? "active" : ""}`}
-            onClick={() => setActiveTab("shop")}
-          >
-            <FaStore /> Add Shop
-          </button>
-        </div>
-
-        <button className="add-btn" onClick={() => openModal(false)}>
-          + Add
-        </button>
-
-        {/* LIST CONTAINER */}
-        <div className="list-container">
-          {(activeTab === "link" ? links : shops).map((item, index) => (
-            <div key={index} className="list-item">
-              <div className="item-details">
-                <p className="item-title">
-                  {item.name}{" "}
-                  <span
-                    className="edit-icon"
-                    onClick={() => openModal(true, index)}
-                  >
-                    ✏️
-                  </span>
-                </p>
-                <p className="item-url">
-                  {item.url}{" "}
-                  <span
-                    className="edit-icon"
-                    onClick={() => openModal(true, index)}
-                  >
-                    ✏️
-                  </span>
-                </p>
-                <p className="click-stats">📊 {item.clicks} clicks</p>
-              </div>
-              <div className="item-actions">
-                <label className="m-switch">
-                  <input type="checkbox" checked={true} />
-                  <span className="m-slider"></span>
-                </label>
-                <MdDelete
-                  className="delete-icon"
-                  onClick={() => deleteItem(index, activeTab)}
-                />
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="banner-section">
-        <h2>Banner</h2>
-        <div className="banner-container">
-          {/* Banner Section */}
-          <div className="banner" style={{ backgroundColor: bgColor }}>
-            <img
-              src={avatar || "/images/avatar.svg"}
-              alt=""
-              className="b-avatar"
-            />
-            <h3 className="b-username">{title}</h3>
-            <p className="handle">🔥/{userName}</p>
-          </div>
-
-          {/* Custom Background Color Section */}
-          <div className="color-picker-section">
-            <h4>Custom Background Color</h4>
-
-            {/* Preset Colors */}
-            <div className="preset-colors">
-              {presetColors.map((color, index) => (
-                <div
-                  key={index}
-                  className="color-circle"
-                  style={{ backgroundColor: color }}
-                  onClick={() => handlePresetColor(color)}
-                ></div>
-              ))}
-            </div>
-
-            {/* Color Input */}
-            <div className="custom-color-input">
-              <input
-                type="color"
-                value={customColor}
-                onChange={handleCustomColor}
-              />
-              <input
-                type="text"
-                value={customColor}
-                onChange={handleCustomColor}
-              />
-            </div>
-          </div>
-        </div>
-        {/* Save Button */}
-        <button className="save-button" onClick={(e) => saveHandler(e)}>
-          Save
-        </button>
-      </div>
+      <ProfileBanner
+        bgColor={bgColor}
+        avatar={avatar}
+        title={title}
+        userName={userName}
+        presetColors={presetColors}
+        handlePresetColor={handlePresetColor}
+        customColor={customColor}
+        handleCustomColor={handleCustomColor}
+        saveHandler={saveHandler}
+      />
 
       {isModalOpen && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <div className="modal-header-toggle">
-              <button
-                className={`modal-tab ${activeTab === "link" ? "active" : ""}`}
-                // onClick={() => setActiveTab('link')}
-              >
-                <i className="fas fa-link"></i> Add Link
-              </button>
-              <button
-                className={`modal-tab ${activeTab === "shop" ? "active" : ""}`}
-                // onClick={() => setActiveTab('shop')}
-              >
-                <i className="fas fa-store"></i> Add Shop
-              </button>
-            </div>
-
-            {/* Input Fields */}
-            <div className="input-group-1">
-              <input
-                type="text"
-                value={newItemName}
-                onChange={(e) => setNewItemName(e.target.value)}
-                className="m-input-field"
-                placeholder={`${activeTab === "link" ? "Link" : "Shop"} Title`}
-              />
-
-              {/* ✅ Toggle ON/OFF for Adding Link */}
-              <div className="add-to-container">
-                {/* <label>Add to {activeTab === 'link' ? 'Links' : 'Shops'}:</label> */}
-                <label className="m-switch">
-                  <input
-                    type="checkbox"
-                    checked={isChecked}
-                    onChange={addItem}
-                    disabled={isChecked}
-                  />
-                  <span className="m-slider"></span>
-                </label>
-              </div>
-            </div>
-
-            <div className="input-group-2">
-              <input
-                type="text"
-                value={newItemURL}
-                onChange={(e) => handleItemUrl(e.target.value)}
-                className="m-input-field"
-                placeholder={`${activeTab === "link" ? "Link" : "Shop"} URL`}
-              />
-
-              {/* ✅ Share & Delete Buttons */}
-              <div className="action-icons">
-                <FaShareAlt
-                  className="icon-share"
-                  onClick={() => shareItem(newItemURL)}
-                />
-                <MdDelete
-                  className="icon-delete"
-                  onClick={() => {
-                    if (editingIndex === null) {
-                      // Try finding the item based on newItemName & newItemURL
-                      const currentItems = activeTab === "link" ? links : shops;
-                      const itemIndex = currentItems.findIndex(
-                        (item) =>
-                          item.name === newItemName && item.url === newItemURL
-                      );
-
-                      if (itemIndex !== -1) {
-                        deleteItem(itemIndex, activeTab);
-                        closeModal();
-                      } else {
-                        alert("Item not found or not in edit mode.");
-                      }
-                    } else {
-                      deleteItem(editingIndex, activeTab);
-                      closeModal();
-                    }
-                  }}
-                />
-              </div>
-            </div>
-            {itemError && <p> {itemError} </p>}
-
-            {/* Modal Buttons */}
-            <div className="modal-buttons">
-              <button
-                className="m-ok-btn"
-                onClick={itemError.length === 0 && closeModal}
-              >
-                OK
-              </button>
-            </div>
-          </div>
-        </div>
+        <ProfileModal
+          activeTab={activeTab}
+          newItemName={newItemName}
+          setNewItemName={setNewItemName}
+          newItemURL={newItemURL}
+          handleItemUrl={handleItemUrl}
+          isChecked={isChecked}
+          addItem={addItem}
+          itemError={itemError}
+          closeModal={closeModal}
+          shareItem={shareItem}
+          deleteItem={deleteItem}
+          editingIndex={editingIndex}
+          links={links}
+          shops={shops}
+        />
       )}
     </div>
   );

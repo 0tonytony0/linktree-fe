@@ -4,10 +4,10 @@ import sparkLogo from "../assets/spark-logo.svg";
 import Main from "./Main";
 import { useNavigate } from "react-router-dom";
 
-const TellUsAboutYourself = ({ handleSignUp = () => {} }) => {
+const TellUsAboutYourself = ({ handleSignUp = () => {}, setFormData , formData}) => {
   const [username, setUsername] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const categories = [
     { label: "💼 Business" },
@@ -29,19 +29,20 @@ const TellUsAboutYourself = ({ handleSignUp = () => {} }) => {
     setSelectedCategory(category.label);
   };
 
-  const handleContinue = (event) => {
-    event.preventDefault();
+  const handleContinue = (e) => {
+    e.preventDefault();
     if (!username.trim() || !selectedCategory) {
       alert("Please enter a username and select a category.");
       return;
     }
 
-    const signupData = { username, selectedCategory };
-    console.log("🚀 Sending sign-up data:", signupData);
-    // console.log('callign signUpdata ')
-    handleSignUp(signupData);
+    const combinedData = {
+      ...formData,
+      username,
+      category: selectedCategory,
+    };
 
-    // navigate("/main");
+    handleSignUp(combinedData);
   };
 
   return (

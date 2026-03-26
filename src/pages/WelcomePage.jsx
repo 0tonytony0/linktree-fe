@@ -20,6 +20,8 @@ const WelcomePage = () => {
     email: "",
     password: "",
     agree: false,
+    username: "",
+    category: "",
   });
 
   const updateHandler = () => {
@@ -30,34 +32,42 @@ const WelcomePage = () => {
     });
   };
 
-  const handleSignUp = async (data) => {
-    
-    const userFormData = {
-      username: data.username,
-      category: data.selectedCategory.split(" ")[1],
-    };
-    console.log(formData, "formData");
-    console.log(userFormData);
-    console.log("inside handleSignUp", data, userFormData);
-    
-    try {
-      const response = await register({ ...formData, ...userFormData });
-      console.log("Registration successful:", response);
-      const data = response.userData;
-      console.log({ data });
-      const userData = {
-        f_name: data.f_name,
-        l_name: data.l_name,
-        username: data.username,
-        email: data.email,
-        isAuthenticated: true,
-      };
+  const handleSignUp = async (finalData) => {
+    const { f_name, l_name, email, password, username, category } = finalData;
 
-      console.log({ userData });
-      dispatch(setUser(userData));
-      navigate("/main");
+    try {
+      const res = await register({
+        f_name,
+        l_name,
+        email,
+        password,
+        username,
+        category,
+      });
+
+      if (res.success && res.data.success) {
+        const { user: registeredUser, token } = res.data.data;
+
+        const userData = {
+          f_name: registeredUser.f_name,
+          l_name: registeredUser.l_name,
+          username: registeredUser.username,
+          email: registeredUser.email,
+          isAuthenticated: true,
+        };
+
+        // Store token for future requests
+        localStorage.setItem("token", token);
+
+        dispatch(setUser(userData));
+        toast.success("Welcome! Your account has been created.");
+        navigate("/main");
+      } else {
+        const errorMsg = res.data?.message || "Registration failed. Please try again.";
+        toast.error(errorMsg);
+      }
     } catch (error) {
-      console.error("Registration failed:", error);
+      toast.error("Something went wrong. Please check your connection.");
     }
   };
 
@@ -73,8 +83,9 @@ const WelcomePage = () => {
       )}
       {index === 2 && (
         <TellUsAboutYourself
+          formData={formData}
+          setFormData={setFormData}
           handleSignUp={handleSignUp}
-          updateHandler={updateHandler}
         />
       )}
 
