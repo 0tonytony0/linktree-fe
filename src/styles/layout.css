@@ -1,4 +1,4 @@
-/* --- Global Layout - Modern & Responsive --- */
+/* --- Global Layout - Premium & Responsive --- */
 
 .layout {
   display: flex;
@@ -14,19 +14,29 @@
   overflow-y: auto;
   display: flex;
   flex-direction: column;
+  min-width: 0; /* Prevents flex overflow */
 }
 
-/* --- RESPONSIVE ADAPTATION --- */
+.page-outlet {
+  flex: 1;
+  overflow-y: auto;
+}
+
+/* --- RESPONSIVE --- */
 @media (max-width: 768px) {
   .layout {
     flex-direction: column;
-    overflow: auto;
+    overflow: visible;
   }
 
   .body-content {
     width: 100%;
-    margin-bottom: 70px; /* Space for the bottom navbar */
+    padding-bottom: 100px; /* Space for floating bottom navbar */
     height: auto;
+    overflow: visible;
+  }
+
+  .page-outlet {
     overflow: visible;
   }
 }

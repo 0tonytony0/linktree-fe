@@ -1,43 +1,32 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { AiFillStar } from "react-icons/ai";
 
-const Testimonials = () => {
-  const [testimonials, setTestimonials] = useState([]);
+const TestimonialCard = () => {
+    const feedbacks = [
+        { name: "John Doe", title: "Content Creator", text: "Spark completely took the pain out of sharing my content. It's so simple and effective!" },
+        { name: "Jane Smith", title: "Artist", text: "I am so grateful for Spark's support. It's invaluable for my digital presence. Thank you!" },
+        { name: "Robert Johnson", title: "Entrepreneur", text: "Having had several unsuccessful attempts before, I'm glad I found Spark. Truly recommended." },
+        { name: "Emily Brown", title: "Social Media Manager", text: "Brilliant communication during the search and I am now very pleased to recommend Spark to others." }
+    ];
 
-  useEffect(() => {
-    fetch("/data/testimonials.json")
-      .then((response) => response.json())
-      .then((data) => setTestimonials(data))
-      .catch((error) => console.error("Error fetching testimonials:", error));
-  }, []);
-
-  return (
-    <section className="testimonials">
-      <div className="testimonials-header">
-        <h1>
-          Here's what our <span className="highlight">customer</span> has to say
-        </h1>
-        <p className="short-description">
-          !!  Real experiences from our valued users. See how Spark is helping businesses and creators succeed.
-        </p>
-      </div>
-
-      <div className="testimonials-grid">
-        {testimonials.map((testimonial, index) => (
-          <div key={index} className="testimonial-card">
-            <h3>{testimonial.review}</h3>
-            <p>{testimonial.description}</p>
-            <div className="testimonial-footer">
-              <img src={testimonial.avatar} alt={testimonial.name} className="avatar" />
-              <div>
-            <h3>{testimonial.name}</h3>
-                <p>{testimonial.designation}</p>
-              </div>
+    return (
+        <section className="testimonials">
+            <div className="testimonials-grid">
+                {feedbacks.map((item, idx) => (
+                    <div key={idx} className="testimonial-card">
+                        <div className="stars">
+                            {[1, 2, 3, 4, 5].map(s => <AiFillStar key={s} />)}
+                        </div>
+                        <p>"{item.text}"</p>
+                        <div className="testimonial-user">
+                            <h4>{item.name}</h4>
+                            <span>{item.title}</span>
+                        </div>
+                    </div>
+                ))}
             </div>
-          </div>
-        ))}
-      </div>
-    </section>
-  );
+        </section>
+    );
 };
 
-export default Testimonials;
+export default TestimonialCard;

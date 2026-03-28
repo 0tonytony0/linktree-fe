@@ -8,21 +8,24 @@ const fonts = [
 
 const FontSelector = ({ currentFont, onFontSelect, fontColor, onColorChange }) => {
   return (
-    <div className="section">
+    <div className="font-customizer">
       <div className="font-selectors">
-        <label>Font:</label>
+        <label>Typography</label>
         <select
           value={currentFont}
           onChange={(e) => onFontSelect(e.target.value)}
           className="m-select"
+          style={{ fontFamily: currentFont }}
         >
           {fonts.map((f) => (
             <option key={f} value={f}>{f}</option>
           ))}
         </select>
+      </div>
 
-        <label className="ml-4">Font Color:</label>
-        <div className="custom-color-input">
+      <div className="custom-color-input">
+        <label>Font Color</label>
+        <div className="picker-wrapper">
           <input
             type="color"
             value={fontColor}
@@ -32,7 +35,8 @@ const FontSelector = ({ currentFont, onFontSelect, fontColor, onColorChange }) =
             type="text"
             value={fontColor}
             onChange={(e) => onColorChange(e.target.value)}
-            className="text-input"
+            className="m-select"
+            placeholder="#000000"
           />
         </div>
       </div>

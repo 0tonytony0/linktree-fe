@@ -39,33 +39,33 @@ function AnalyticsPage() {
       try {
         const res = await getAnalyticsData();
 
-        // 1. Device Analytics
+        // 1. Device Analytics - Refined Emerald Palette
         setDeviceData({
           labels: ["Desktop", "Mobile", "Tablet"],
           datasets: [
             {
               label: "Usage by Device",
               data: [
-                res.deviceClicks.Desktop,
-                res.deviceClicks.Mobile,
-                res.deviceClicks.Tablet,
+                res.deviceClicks?.Desktop || 0,
+                res.deviceClicks?.Mobile || 0,
+                res.deviceClicks?.Tablet || 0,
               ],
-              backgroundColor: ["#00B894", "#395B64", "#A5C9CA"],
-              borderRadius: 8,
+              backgroundColor: ["#28A263", "#4ADE80", "#DCFCE7"],
+              borderRadius: 6,
             },
           ],
         });
 
         // 2. Links & Shops Analytics
-        const allLinksData = [...res.linksData, ...res.shopsData];
+        const allLinksData = [...(res.linksData || []), ...(res.shopsData || [])];
         setLinksData({
           labels: allLinksData.map((link) => link.name),
           datasets: [
             {
               label: "Total Clicks",
               data: allLinksData.map((link) => link.clicks),
-              backgroundColor: "#2C3333",
-              borderRadius: 8,
+              backgroundColor: "#28A263",
+              borderRadius: 6,
             },
           ],
         });
@@ -73,17 +73,20 @@ function AnalyticsPage() {
         // 3. Time Series Analytics
         const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
         setTimeData({
-          labels: monthNames.slice(0, res.monthlyClicks.length),
+          labels: monthNames.slice(0, res.monthlyClicks?.length || 0),
           datasets: [
             {
               label: "Monthly Performance",
-              data: res.monthlyClicks,
-              borderColor: "#00B894",
-              backgroundColor: "rgba(0, 184, 148, 0.1)",
+              data: res.monthlyClicks || [],
+              borderColor: "#28A263",
+              backgroundColor: "rgba(40, 162, 99, 0.1)",
               fill: true,
               tension: 0.4,
-              pointRadius: 4,
-              pointBackgroundColor: "#00B894",
+              pointRadius: 5,
+              pointHoverRadius: 8,
+              pointBackgroundColor: "#28A263",
+              pointBorderColor: "#fff",
+              pointBorderWidth: 2,
             },
           ],
         });
@@ -103,24 +106,33 @@ function AnalyticsPage() {
         display: false,
       },
       tooltip: {
-        backgroundColor: "#1e2020",
-        titleFont: { family: "Poppins", weight: "600" },
-        bodyFont: { family: "Poppins" },
+        backgroundColor: "#111827",
+        titleFont: { family: "Poppins", size: 13, weight: "700" },
+        bodyFont: { family: "Poppins", size: 12 },
         padding: 12,
         cornerRadius: 8,
+        displayColors: false,
       },
     },
     scales: {
       y: {
+        beginAtZero: true,
         grid: {
           display: true,
-          color: "rgba(0,0,0,0.05)",
+          color: "rgba(0,0,0,0.04)",
+          drawBorder: false,
         },
-        ticks: { font: { family: "Poppins", size: 12 } },
+        ticks: { 
+          font: { family: "Poppins", size: 11 },
+          color: "#6B7280"
+        },
       },
       x: {
         grid: { display: false },
-        ticks: { font: { family: "Poppins", size: 12 } },
+        ticks: { 
+          font: { family: "Poppins", size: 11 },
+          color: "#6B7280"
+        },
       },
     },
   };
@@ -134,7 +146,7 @@ function AnalyticsPage() {
         <div className="chart-card">
           <h3>📈 Monthly Performance</h3>
           <div className="chart-wrapper">
-            {timeData ? <Line data={timeData} options={chartOptions} /> : <p>Loading...</p>}
+            {timeData ? <Line data={timeData} options={chartOptions} /> : <p>Loading Analytics...</p>}
           </div>
         </div>
 
@@ -142,7 +154,7 @@ function AnalyticsPage() {
         <div className="chart-card">
           <h3>🔗 Most Clicked Links</h3>
           <div className="chart-wrapper">
-            {linksData ? <Bar data={linksData} options={chartOptions} /> : <p>Loading...</p>}
+            {linksData ? <Bar data={linksData} options={chartOptions} /> : <p>Loading Analytics...</p>}
           </div>
         </div>
 
@@ -150,7 +162,7 @@ function AnalyticsPage() {
         <div className="chart-card">
           <h3>📱 Usage by Device</h3>
           <div className="chart-wrapper">
-            {deviceData ? <Bar data={deviceData} options={chartOptions} /> : <p>Loading...</p>}
+            {deviceData ? <Bar data={deviceData} options={chartOptions} /> : <p>Loading Analytics...</p>}
           </div>
         </div>
       </div>

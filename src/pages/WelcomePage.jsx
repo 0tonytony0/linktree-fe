@@ -5,14 +5,13 @@ import CreateAccount from "./CreateAccount";
 import TellUsAboutYourself from "./TellUsAboutYourself";
 import Welcome from "../components/Welcome";
 import { register } from "../services/authService";
-import { useDispatch } from "react-redux";
-import { setUser } from "../store/userSlice";
+import { toast } from "react-toastify";
 
 const WelcomePage = () => {
   const [index, setIndex] = useState(0);
   const navigate = useNavigate();
 
-  const dispatch = useDispatch();
+
 
   const [formData, setFormData] = useState({
     f_name: "",
@@ -46,22 +45,8 @@ const WelcomePage = () => {
       });
 
       if (res.success && res.data.success) {
-        const { user: registeredUser, token } = res.data.data;
-
-        const userData = {
-          f_name: registeredUser.f_name,
-          l_name: registeredUser.l_name,
-          username: registeredUser.username,
-          email: registeredUser.email,
-          isAuthenticated: true,
-        };
-
-        // Store token for future requests
-        localStorage.setItem("token", token);
-
-        dispatch(setUser(userData));
-        toast.success("Welcome! Your account has been created.");
-        navigate("/main");
+        toast.success("Welcome! Your account has been created. Please log in.");
+        navigate("/login");
       } else {
         const errorMsg = res.data?.message || "Registration failed. Please try again.";
         toast.error(errorMsg);

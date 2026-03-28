@@ -1,164 +1,372 @@
-/* --- Appearance Component - Modernized --- */
+/* --- Appearance Component - Premium Visual Customizer --- */
 
 .appearance-container {
-  padding: var(--space-xl);
+  padding: 1.5rem 0;
   max-width: 600px;
   margin: 0 auto;
   animation: fadeIn 0.4s ease-out;
 }
 
-/* Common Section Style */
-.appearance-container .section {
-  background: var(--surface);
-  border-radius: var(--radius-lg);
-  padding: var(--space-xl);
-  box-shadow: var(--shadow-md);
-  margin-top: var(--space-lg);
-  border: 1px solid var(--border);
-}
-
+/* ── Section Titles ── */
 .appearance-container h2 {
-  font-family: var(--font-premium);
-  font-size: 1.25rem;
+  font-family: var(--font-bold);
+  font-size: 1.1rem;
   font-weight: 700;
-  color: var(--primary);
-  margin-top: var(--space-xl);
-  margin-bottom: var(--space-md);
+  color: var(--text-main);
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  text-transform: none;
+  letter-spacing: -0.01em;
 }
 
 .appearance-container h3 {
-  font-size: 0.9rem;
+  font-family: var(--font-main);
+  font-size: 0.85rem;
   font-weight: 600;
   color: var(--text-muted);
-  margin-bottom: var(--space-md);
+  margin-bottom: 1rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
-/* Layout Options */
+/* ── Common Section Card ── */
+.appearance-container .section {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-md);
+  margin-top: 1rem;
+  border: 1px solid var(--border);
+}
+
+/* ── Layout Options Grid ── */
 .layout-options {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-md);
+  gap: 1rem;
 }
 
 .layout-options button {
   background: var(--accent);
   border: 2px solid transparent;
   border-radius: var(--radius-md);
-  padding: var(--space-md);
+  padding: 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-sm);
-  transition: all 0.2s ease;
+  gap: 0.75rem;
+  transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+  width: 100%;
 }
 
 .layout-options button:hover {
   background: var(--surface);
-  transform: translateY(-2px);
+  transform: translateY(-3px);
   box-shadow: var(--shadow-sm);
+  border-color: var(--border);
 }
 
 .layout-options button.active {
   border-color: var(--primary);
   background: var(--surface);
   box-shadow: var(--shadow-md);
+  transform: scale(1.02);
+}
+
+.layout-preview-img {
+  width: 100%;
+  aspect-ratio: 16/10;
+  background: var(--accent);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  overflow: hidden;
 }
 
 .layout-options img {
   width: 100%;
-  max-width: 120px;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border);
+  height: auto;
+  object-fit: contain;
 }
 
-/* Button Styler */
+.layout-options span {
+  font-family: var(--font-main);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+/* ── Button Styler ── */
 .button-container {
   display: flex;
   flex-direction: column;
-  gap: var(--space-lg);
+  gap: 1.5rem;
 }
 
 .row {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-md);
+  gap: 1rem;
+  align-items: flex-end;
 }
 
 .btn {
-  width: 140px;
-  height: 44px;
+  width: 130px;
+  height: 48px;
   cursor: pointer;
   transition: all 0.2s ease;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--background);
 }
 
 .btn.active-style {
   outline: 3px solid var(--primary);
-  outline-offset: 2px;
+  outline-offset: 3px;
+  border-color: var(--primary);
 }
 
-/* Theme Selection */
+.btn-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+/* ── Button Customizer ── */
+.button-customizer {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.button-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.button-category {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.btn-preview {
+  width: 100%;
+  height: 44px;
+  max-width: 140px;
+  background: var(--background);
+  border: 1.5px solid var(--border);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-preview.active-style {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(40,162,99,0.15);
+  transform: translateY(-2px);
+}
+
+/* ── Specific Button Preview Styles ── */
+/* Fill */
+.btn-preview.fill-square { background: #000; border: none; }
+.btn-preview.fill-rounded { background: #000; border: none; border-radius: 8px; }
+.btn-preview.fill-outline-shadow { background: #000; border: 1.5px solid #000; box-shadow: 4px 4px 0 rgba(0,0,0,0.2); }
+
+/* Outline */
+.btn-preview.outline-square { background: transparent; border: 1.5px solid #000; }
+.btn-preview.outline-rounded { background: transparent; border: 1.5px solid #000; border-radius: 8px; }
+.btn-preview.outline-circle { background: transparent; border: 1.5px solid #000; border-radius: 22px; }
+
+/* Hard Shadow */
+.btn-preview.hard-shadow-square { background: #fff; border: 1.5px solid #000; box-shadow: 4px 4px 0 #000; }
+.btn-preview.hard-shadow-rounded { background: #fff; border: 1.5px solid #000; border-radius: 8px; box-shadow: 4px 4px 0 #000; }
+.btn-preview.hard-shadow-circle { background: #fff; border: 1.5px solid #000; border-radius: 22px; box-shadow: 4px 4px 0 #000; }
+
+/* Soft Shadow */
+.btn-preview.soft-shadow-square { background: #fff; border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+.btn-preview.soft-shadow-rounded { background: #fff; border: none; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+.btn-preview.soft-shadow-circle { background: #fff; border: none; border-radius: 22px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+
+/* Special */
+.btn-preview.special-glass { background: rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.1) !important; backdrop-filter: blur(4px); border-radius: 8px; }
+.btn-preview.special-neon { background: transparent; border: 2.5px solid #000 !important; box-shadow: 0 0 8px rgba(0,0,0,0.4); border-radius: 20px; }
+.btn-preview.special-3d { background: #000; border-bottom: 4px solid #444 !important; border-radius: 8px; }
+.btn-preview.special-wavy { background: #000; border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+.btn-preview.special-mesh { background: linear-gradient(45deg, #222, #666); border-radius: 8px; }
+.btn-preview.special-sketch { background: transparent; border: 2px solid #000 !important; border-radius: 4px; box-shadow: 2px 2px 0 #000; }
+
+.btn-preview::after {
+  content: "Abc";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.65rem;
+  font-weight: 600;
+  opacity: 0.4;
+}
+
+.btn-preview.fill-square::after, 
+.btn-preview.fill-rounded::after,
+.btn-preview.special-black-pill::after {
+  color: #fff;
+}
+
+/* ── Color Selectors ── */
+.color-selectors {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.picker-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.picker-wrapper input[type="color"] {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  background: none;
+}
+
+.picker-wrapper .m-select {
+  flex: 1;
+  margin-top: 0;
+}
+
+/* ── Theme Grid ── */
 .theme-options {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-md);
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 1.25rem;
 }
 
 .theme-options button {
-  background: var(--accent);
+  background: transparent;
   border: 2px solid transparent;
   border-radius: var(--radius-md);
-  padding: var(--space-sm);
-  transition: all 0.2s ease;
+  padding: 0;
+  transition: all 0.22s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
 }
 
-.theme-options button.active-theme {
-  border-color: var(--primary);
-  background: var(--surface);
-  box-shadow: var(--shadow-md);
+.theme-preview-img {
+  width: 100%;
+  aspect-ratio: 3/4;
+  background: var(--accent);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .theme-options img {
   width: 100%;
-  border-radius: var(--radius-sm);
-  margin-bottom: var(--space-xs);
+  height: 100%;
+  object-fit: cover;
 }
 
-/* Color & Font Selection */
+.theme-options button.active-theme .theme-preview-img {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(40,162,99,0.15);
+}
+
+.theme-options button.active-theme span {
+  color: var(--primary);
+  font-weight: 800;
+}
+
+/* ── Color & Font Selectors ── */
+.font-customizer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
 .font-selectors {
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
+  gap: 1.25rem;
 }
 
 .m-select {
   width: 100%;
-  padding: var(--space-md);
+  padding: 12px 14px;
   background: var(--accent);
-  border: 1px solid var(--border);
+  border: 1.5px solid var(--border);
   border-radius: var(--radius-md);
   font-family: var(--font-main);
+  font-size: 0.9rem;
+  color: var(--text-main);
   outline: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .m-select:focus {
-  border-color: var(--primary-light);
+  border-color: var(--primary);
+  background: var(--background);
 }
 
-/* Color Input Styling */
 .custom-color-input {
   display: flex;
   align-items: center;
-  gap: var(--space-md);
+  gap: 12px;
+}
+
+.custom-color-input label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
 }
 
 .custom-color-input input[type="color"] {
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
   padding: 0;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  background: none;
 }
 
-/* Save Button Styling from profile.css is shared here */
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .appearance-container {
+    padding: 1rem 0;
+  }
+  
+  .layout-options {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .theme-options {
+    grid-template-columns: 1fr 1fr;
+  }
+}

@@ -25,25 +25,23 @@ const LoginPage = () => {
   // 🔹 Handle Login Submission
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError("");
+    setError(""); // Explicitly clear any previous errors
 
     try {
       const res = await login(username, password);
-      // login returns { success, status, data } from customFetch
-      // res.data is the standardized backend response: { success, message, data: { user, token } }
 
       if (res.success && res.data.success) {
-        const { user: loggedInUser, token } = res.data.data;
+        const { user: loggedInUser } = res.data.data;
         dispatch(setUser(loggedInUser));
-
-        // Token is already stored by authService.login
         toast.success("Login successful! 🎉");
-        navigate("/main?tab=links");
+        navigate("/main/links");
       } else {
         const errorMsg = res.data?.message || "Login failed. Please check your credentials.";
+        setError(errorMsg); // Use local state error for inline display if needed
         toast.error(errorMsg);
       }
     } catch (err) {
+      setError("Something went wrong. Please check your connection.");
       toast.error("Something went wrong. Please check your connection.");
     }
   };

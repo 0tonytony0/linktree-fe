@@ -12,23 +12,23 @@ const themes = [
 
 const ThemeGrid = ({ currentTheme, onSelect }) => {
   return (
-    <div className="section">
-      <div className="theme-options">
-        {themes.map((theme) => (
-          <button
-            key={theme.name}
-            className={currentTheme === theme.name ? "active-theme" : ""}
-            onClick={() => onSelect(theme)}
-          >
+    <div className="theme-options">
+      {themes.map((theme) => (
+        <button
+          key={theme.name}
+          type="button"
+          className={currentTheme === theme.name ? "active-theme" : ""}
+          onClick={() => onSelect(theme)}
+        >
+          <div className="theme-preview-img">
             <img
               src={theme.icon}
               alt={theme.name}
-              style={{ border: "1px solid #eee", margin: "10px", borderRadius: "8px" }}
             />
-            <span>{theme.name}</span>
-          </button>
-        ))}
-      </div>
+          </div>
+          <span>{theme.name}</span>
+        </button>
+      ))}
     </div>
   );
 };

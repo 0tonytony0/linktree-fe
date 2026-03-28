@@ -1,6 +1,8 @@
 import React from "react";
-import { FaShareAlt } from "react-icons/fa";
-import { MdDelete } from "react-icons/md";
+import { FaShareAlt, FaGlobe, FaImage } from "react-icons/fa";
+import { MdDelete, MdClose } from "react-icons/md";
+import { uploadImage } from "../../services/uploadServices";
+import { toast } from "react-toastify";
 
 const ProfileModal = ({
   activeTab,
@@ -8,90 +10,118 @@ const ProfileModal = ({
   setNewItemName,
   newItemURL,
   handleItemUrl,
-  isChecked,
+  newItemImage,
+  setNewItemImage,
   addItem,
   itemError,
   closeModal,
   shareItem,
   deleteItem,
   editingIndex,
-  links,
-  shops
 }) => {
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    try {
+      const toastId = toast.loading("Uploading thumbnail...");
+      const imageData = await uploadImage(file);
+      setNewItemImage(imageData.imageUrl);
+      toast.update(toastId, { render: "Thumbnail uploaded! 🖼️", type: "success", isLoading: false, autoClose: 2000 });
+    } catch (err) {
+      toast.error("Upload failed");
+    }
+  };
   return (
-    <div className="modal-overlay">
+    <div className="modal-overlay" onClick={(e) => e.target.className === 'modal-overlay' && closeModal()}>
       <div className="modal-content">
-        <div className="modal-header-toggle">
-          <button className={`modal-tab ${activeTab === "link" ? "active" : ""}`}>
-            <i className="fas fa-link"></i> Add Link
-          </button>
-          <button className={`modal-tab ${activeTab === "shop" ? "active" : ""}`}>
-            <i className="fas fa-store"></i> Add Shop
-          </button>
+        <div className="modal-header">
+          <h3>{editingIndex !== null ? "Edit" : "Add"} {activeTab === "link" ? "Link" : "Shop"}</h3>
+          <button className="close-btn" onClick={closeModal}><MdClose /></button>
         </div>
 
-        {/* Input Fields */}
-        <div className="input-group-1">
-          <input
-            type="text"
-            value={newItemName}
-            onChange={(e) => setNewItemName(e.target.value)}
-            className="m-input-field"
-            placeholder={`${activeTab === "link" ? "Link" : "Shop"} Title`}
-          />
-
-          <div className="add-to-container">
-            <label className="m-switch">
-              <input
-                type="checkbox"
-                checked={isChecked}
-                onChange={addItem}
-                disabled={isChecked}
-              />
-              <span className="m-slider"></span>
-            </label>
-          </div>
-        </div>
-
-        <div className="input-group-2">
-          <input
-            type="text"
-            value={newItemURL}
-            onChange={(e) => handleItemUrl(e.target.value)}
-            className="m-input-field"
-            placeholder={`${activeTab === "link" ? "Link" : "Shop"} URL`}
-          />
-
-          <div className="action-icons">
-            <FaShareAlt className="icon-share" onClick={() => shareItem(newItemURL)} />
-            <MdDelete
-              className="icon-delete"
-              onClick={() => {
-                if (editingIndex === null) {
-                  const currentItems = activeTab === "link" ? links : shops;
-                  const itemIndex = currentItems.findIndex(
-                    (item) => item.name === newItemName && item.url === newItemURL
-                  );
-                  if (itemIndex !== -1) {
-                    deleteItem(itemIndex, activeTab);
-                    closeModal();
-                  } else {
-                    alert("Item not found or not in edit mode.");
-                  }
-                } else {
-                  deleteItem(editingIndex, activeTab);
-                  closeModal();
-                }
-              }}
+        <div className="modal-body">
+          <div className="m-input-group">
+            <label>{activeTab === "link" ? "Link" : "Shop"} Title</label>
+            <input
+              type="text"
+              value={newItemName}
+              onChange={(e) => setNewItemName(e.target.value)}
+              className="m-input-field"
+              placeholder="e.g. My Website"
             />
           </div>
-        </div>
-        {itemError && <p className="error-text"> {itemError} </p>}
 
-        <div className="modal-buttons">
-          <button className="m-ok-btn" onClick={itemError.length === 0 ? closeModal : null}>
-            OK
-          </button>
+          <div className="m-input-group">
+            <label>{activeTab === "link" ? "Link" : "Shop"} URL</label>
+            <div className="m-input-with-icon">
+              <FaGlobe className="m-field-icon" />
+              <input
+                type="text"
+                value={newItemURL}
+                onChange={(e) => handleItemUrl(e.target.value)}
+                className="m-input-field"
+                placeholder="https://example.com"
+              />
+            </div>
+            {itemError && <p className="error-text">{itemError}</p>}
+          </div>
+
+          <div className="m-input-group">
+            <label>Thumbnail (Optional)</label>
+            <div className="thumbnail-manager">
+              {newItemImage ? (
+                <div className="thumbnail-preview-box">
+                  <img src={newItemImage} alt="Preview" />
+                  <button className="remove-thumb" onClick={() => setNewItemImage("")}>
+                    <MdClose />
+                  </button>
+                </div>
+              ) : (
+                <div className="thumbnail-upload-options">
+                  <label className="m-upload-label">
+                    <FaImage /> Upload Image
+                    <input type="file" onChange={handleFileChange} hidden accept="image/*" />
+                  </label>
+                  <span className="or-text">or</span>
+                  <input
+                    type="text"
+                    placeholder="Paste image URL"
+                    value={newItemImage}
+                    onChange={(e) => setNewItemImage(e.target.value)}
+                    className="m-input-field small"
+                  />
+                </div>
+              )}
+            </div>
+            <p className="hint-text">Image cards appear premium in mobile view.</p>
+          </div>
+        </div>
+
+        <div className="modal-footer">
+          {editingIndex !== null && (
+            <button 
+              className="m-delete-btn" 
+              onClick={() => { deleteItem(editingIndex, activeTab); closeModal(); }}
+            >
+              <MdDelete /> Delete
+            </button>
+          )}
+          
+          <div className="footer-actions">
+            {newItemURL && !itemError && (
+              <button className="m-share-btn" onClick={() => shareItem(newItemURL)} title="Share Link">
+                <FaShareAlt />
+              </button>
+            )}
+            <button 
+              className="m-ok-btn" 
+              onClick={addItem}
+              disabled={!!itemError || !newItemName || !newItemURL}
+            >
+              {editingIndex !== null ? "Update" : "Add"}
+            </button>
+          </div>
         </div>
       </div>
     </div>

@@ -3,79 +3,158 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateUser } from "../services/authService";
 import { setUser } from "../store/userSlice";
 import { toast } from "react-toastify";
-
+import { FaUser, FaEnvelope, FaLock, FaTrashAlt } from "react-icons/fa";
 
 const Settings = () => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
-    f_name: user.f_name,
-    l_name: user.l_name,
-    email: user.email,
+    f_name: user.f_name || "",
+    l_name: user.l_name || "",
+    email: user.email || "",
     password: "",
     confirmPassword: "",
   });
-  console.log({ user });
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    if (formData.password && formData.password !== formData.confirmPassword) {
+      toast.error("Passwords do not match!");
+      return;
+    }
+
     try {
-      e.preventDefault();
       const updatedData = await updateUser(formData);
       dispatch(setUser({ ...user, ...formData }));
-      toast.success("saved successfully!");
+      toast.success("Settings saved successfully! 🎉");
     } catch (error) {
       console.error(error);
-      toast.error("something went wrong . Please try again.");
+      toast.error("Failed to update settings. Please try again.");
     }
   };
 
   return (
     <div className="settings-container">
-      <img src={"/images/settings-header.svg"} alt="" className="" />
+      {/* Premium Hero Section */}
+      <div className="settings-hero">
+        <div className="hero-content">
+          <div className="hero-avatar">
+            <FaUser />
+          </div>
+          <div className="hero-text">
+            <h2>Edit Profile</h2>
+            <p>{user.f_name} {user.l_name} ({user.username})</p>
+          </div>
+        </div>
+      </div>
+
       <form onSubmit={handleSubmit} className="settings-form">
-        <label>First name</label>
-        <input
-          type="text"
-          name="f_name"
-          value={formData.f_name}
-          onChange={handleChange}
-        />
+        <div className="settings-section-title">
+          <h3>Personal Information</h3>
+        </div>
 
-        <label>Last name</label>
-        <input
-          type="text"
-          name="l_name"
-          value={formData.l_name}
-          onChange={handleChange}
-        />
+        <div className="settings-grid">
+          <div className="settings-group">
+            <label>First Name</label>
+            <div className="input-with-icon">
+              <FaUser className="field-icon" />
+              <input
+                type="text"
+                name="f_name"
+                placeholder="First name"
+                value={formData.f_name}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
 
-        <label>Email</label>
-        <input type="email" name="email" value={formData.email} readOnly />
+          <div className="settings-group">
+            <label>Last Name</label>
+            <div className="input-with-icon">
+              <FaUser className="field-icon" />
+              <input
+                type="text"
+                name="l_name"
+                placeholder="Last name"
+                value={formData.l_name}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+        </div>
 
-        <label>New Password</label>
-        <input
-          type="password"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-        />
+        <div className="settings-group">
+          <label>Email Address</label>
+          <div className="input-with-icon readonly">
+            <FaEnvelope className="field-icon" />
+            <input 
+              type="email" 
+              name="email" 
+              value={formData.email} 
+              readOnly 
+              title="Email cannot be changed"
+            />
+          </div>
+        </div>
 
-        <label>Confirm Password</label>
-        <input
-          type="password"
-          name="confirmPassword"
-          value={formData.confirmPassword}
-          onChange={handleChange}
-        />
+        <div className="settings-section-title spacing">
+          <h3>Security</h3>
+        </div>
+
+        <div className="settings-grid">
+          <div className="settings-group">
+            <label>New Password</label>
+            <div className="input-with-icon">
+              <FaLock className="field-icon" />
+              <input
+                type="password"
+                name="password"
+                placeholder="New password"
+                value={formData.password}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+
+          <div className="settings-group">
+            <label>Confirm Password</label>
+            <div className="input-with-icon">
+              <FaLock className="field-icon" />
+              <input
+                type="password"
+                name="confirmPassword"
+                placeholder="Confirm password"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+        </div>
+
         <div className="save-btn-container">
           <button type="submit" className="save-btn">
-            Save
+            Save Changes
           </button>
+        </div>
+
+        {/* Danger Zone */}
+        <div className="danger-zone">
+          <div className="danger-title">Danger Zone</div>
+          <div className="danger-box">
+             <div className="danger-info">
+               <h4>Delete Account</h4>
+               <p>Permanently delete your profile and all link data. This action cannot be undone.</p>
+             </div>
+             <button type="button" className="delete-account-btn">
+               <FaTrashAlt /> Delete Profile
+             </button>
+          </div>
         </div>
       </form>
     </div>

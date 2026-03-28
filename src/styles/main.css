@@ -1,48 +1,43 @@
-/* --- Main Dashboard Container - Responsive Layout --- */
+/* --- Main Dashboard Container - Premium Responsive Layout --- */
 
 .main-content {
   display: flex;
   flex-direction: row;
   background-color: var(--background);
-  min-height: 100vh;
-  gap: var(--space-xl);
-  padding: 0;
+  min-height: calc(100vh - 90px); /* Subtract header height */
   overflow: hidden;
 }
 
-/* Sidebar Placeholder (for Navbar integration) */
-.navbar + .main-content {
-  flex: 1;
-}
-
-/* Mobile Preview Section (Left) */
+/* ── Mobile Preview Panel (Left) ── */
 .mobile-sample {
-  flex: 1;
-  max-width: 450px;
+  width: 380px;
+  flex-shrink: 0;
   background: var(--surface);
   border-right: 1px solid var(--border);
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: var(--space-xl);
+  padding: 2rem;
   position: sticky;
   top: 0;
-  height: 100vh;
+  height: calc(100vh - 90px);
+  overflow: hidden;
 }
 
-/* Editor Section (Right) */
+/* ── Editor Panel (Right) ── */
 .link-details {
-  flex: 1.5;
-  padding: var(--space-xl);
+  flex: 1;
+  padding: 2rem 2.5rem;
   overflow-y: auto;
-  height: 100vh;
+  height: calc(100vh - 90px);
   scrollbar-width: thin;
   scrollbar-color: var(--border) transparent;
+  min-width: 0;
 }
 
-/* Editor Section Scrollbar */
 .link-details::-webkit-scrollbar {
-  width: 6px;
+  width: 5px;
 }
 
 .link-details::-webkit-scrollbar-thumb {
@@ -50,36 +45,41 @@
   border-radius: var(--radius-full);
 }
 
-/* --- RESPONSIVE ADAPTATION --- */
+.link-details::-webkit-scrollbar-track {
+  background: transparent;
+}
 
+/* ── RESPONSIVE ── */
 @media (max-width: 1200px) {
   .mobile-sample {
-    max-width: 380px;
+    width: 320px;
+    padding: 1.5rem;
   }
 }
 
 @media (max-width: 1024px) {
   .main-content {
     flex-direction: column;
-    padding-bottom: 80px; /* Space for Mobile Bottom Nav */
     overflow: auto;
+    height: auto;
+    min-height: auto;
   }
 
-  /* Hide Mobile Preview on screens where editing is primary */
   .mobile-sample {
-    display: none;
+    display: none; /* Hide preview on smaller screens */
   }
 
   .link-details {
     width: 100%;
     height: auto;
-    padding: var(--space-md);
+    padding: 1.5rem;
     overflow: visible;
   }
 }
 
 @media (max-width: 768px) {
-  .main-content {
-    padding-bottom: 70px;
+  .link-details {
+    padding: 1rem;
+    padding-bottom: 120px; /* Space for floating mobile nav */
   }
 }

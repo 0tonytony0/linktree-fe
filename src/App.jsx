@@ -10,6 +10,9 @@ import ResetPassword from './components/ResetPassword';
 import { ProtectedRoutes } from './routes/protectedRoutes';
 import Preview from './pages/Preview';
 
+import { Navigate } from 'react-router-dom';
+import AnalyticsPage from './components/AnalyticsPage';
+import Settings from './components/Settings';
 
 function App() {
   const [count, setCount] = useState(0);
@@ -21,13 +24,18 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/signup" element={<WelcomePage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/profile" element={<Profile />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
         <Route path="/preview/:profileId" element={<Preview />} />
+        <Route path="/:username" element={<Preview />} />
         {/* Routes with Layout */}
         <Route path="/main" element={<ProtectedRoutes />}>
-          <Route index element={<Main />} />
+          <Route index element={<Navigate to="links" replace />} />
+          <Route path="links" element={<Main />} />
+          <Route path="appearance" element={<Main />} />
+          <Route path="analytics" element={<AnalyticsPage />} />
+          <Route path="settings" element={<Settings />} />
+          <Route path="profile" element={<Profile />} />
         </Route>
       </Routes>
     </Router>

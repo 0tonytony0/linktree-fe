@@ -3,9 +3,7 @@ import "../styles/main.css";
 import MobileSample from "../components/MobileSample";
 import Appearance from "../components/Appearance";
 import Profile from "../components/Profile";
-import AnalyticsPage from "../components/AnalyticsPage";
 import { useLocation } from "react-router-dom";
-import { TAB_LINKS } from "./../utils/constants";
 import "../styles/mobilesample.css";
 import "../styles/profile.css";
 import "../styles/appearance.css";
@@ -18,180 +16,108 @@ import {
 } from "../services/profileService";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../store/userSlice";
+import { setProfileData, updateAvatar } from "../store/profileSlice";
 import { toast } from "react-toastify";
-import Settings from './../components/Settings';
 
 const Main = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  const [avatar, setAvatar] = useState(null);
-  const [currentTab, setCurrentTab] = useState("");
+  const profile = useSelector((state) => state.profile);
   const location = useLocation();
 
-  const [title, setTitle] = useState("");
-  const [bio, setBio] = useState("");
-  const [links, setLinks] = useState([]);
-  const [shops, setShops] = useState([]);
-  const [isChecked2, setIsChecked2] = useState(false);
-  const [bgColor, setBgColor] = useState("#3B312C"); // Default background color
-  const [customColor, setCustomColor] = useState("#000000");
-  const [isProfileData, setIsProfileData] = useState(false);
-  // Store styles that will be modified through Appearance.jsx
-  const [styles, setStyles] = useState({
-    layout: "stack",
-    buttonStyle: "",
-    buttonColor: "#28A263",
-    buttonFontColor: "#ffffff",
-    font: "Poppins",
-    fontColor: "#000000",
-    theme: "air-snow",
-    backgroundColor: "#ffffff",
-  });
+  // Determine which sub-tab from path
+  const isAppearance = location.pathname.includes("appearance");
 
+  // Fetch profile once on mount (only if not already loaded)
   useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    setCurrentTab(params.toString().split("tab=")[1]);
-  }, [location.search]);
+    const fetchProfile = async () => {
+      try {
+        const res = await getProfile();
+        const profileData = res.profile;
+        if (profileData) {
+          dispatch(setProfileData({
+            title: profileData.title,
+            bio: profileData.bio,
+            links: profileData.links,
+            shops: profileData.shops,
+            banner: profileData.banner,
+            appreance: profileData.appreance,
+            avatar: profileData.avatar,
+          }));
+          dispatch(setUser({ ...user, profileId: profileData._id }));
+        }
+      } catch (err) {
+        // Silently handle new users who have no profile yet
+        console.warn("No profile found yet. New user.");
+      }
+    };
+
+    if (user.isAuthenticated && !profile.isProfileData) {
+      fetchProfile();
+    }
+  }, [dispatch, user.isAuthenticated, profile.isProfileData, user]);
 
   const handleImageChange = async (e) => {
     try {
       const file = e.target.files[0];
-      if (file) {
-      }
+      if (!file) return;
+      
+      const toastId = toast.loading("Uploading image...");
       const imageData = await uploadImage(file);
-      setAvatar(imageData.imageUrl);
+      dispatch(updateAvatar(imageData.imageUrl));
+      toast.update(toastId, { render: "Image uploaded! 🖼️", type: "success", isLoading: false, autoClose: 2000 });
     } catch (err) {
       toast.error("Image upload failed");
     }
   };
 
   const saveHandler = async (e) => {
-    e.preventDefault();
-
+    if (e && e.preventDefault) e.preventDefault();
+    
     const formData = {
-      title: title,
-      bio: bio,
-      links: links,
-      shops: shops,
-      banner: customColor,
-      appreance: { ...styles },
-      avatar: avatar || "",
+      title: profile.title,
+      bio: profile.bio,
+      links: profile.links,
+      shops: profile.shops,
+      banner: profile.customColor,
+      appreance: { ...profile.styles },
+      avatar: profile.avatar || "",
     };
 
     try {
-      if (!isProfileData) {
+      const toastId = toast.loading("Saving changes...");
+      if (!profile.isProfileData) {
         await createProfile(formData);
-        toast.success("successfully saved !");
+        toast.update(toastId, { render: "Profile created! 🎉", type: "success", isLoading: false, autoClose: 3000 });
       } else {
         await updateProfile(formData);
-        toast.success("successfully saved !");
+        toast.update(toastId, { render: "Changes saved! ✨", type: "success", isLoading: false, autoClose: 2000 });
       }
     } catch (error) {
-      toast.error("Failed to save. Please try again.");
+      toast.error("Failed to save changes. Please try again.");
     }
   };
 
-  useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const profile = await getProfile();
-        const profileData = profile.profile;
-        setTitle(profileData.title);
-        setBio(profileData.bio);
-        setCustomColor(profileData.banner);
-        setBgColor(profileData.banner);
-        setLinks(profileData.links);
-        setShops(profileData.shops);
-        setStyles(profileData.appreance);
-        setAvatar(profileData.avatar);
-        dispatch(setUser({ ...user, profileId: profileData._id }));
-        setIsProfileData(true);
-      } catch (err) {
-        toast.error("Failed to fetch profile");
-      }
-    };
-    fetchProfile();
-  }, []);
-  const updateLinkClick = useCallback((linkId, isLink) => {
-    if (isLink) {
-      setLinks((prev) =>
-        prev.map((linkData) => {
-          if (linkData?._id === linkId) {
-            return { ...linkData, clicks: linkData.clicks + 1 };
-          }
-          return linkData;
-        })
-      );
-    } else {
-      setShops((prev) =>
-        prev.map((shopData) => {
-          if (shopData?._id === linkId) {
-            return { ...shopData, clicks: shopData.clicks + 1 };
-          }
-          return shopData;
-        })
-      );
-    }
-  }, []);
-
   return (
-    <>
-      {(currentTab === TAB_LINKS.LINKS ||
-        // !currentTab ||
-        currentTab === TAB_LINKS.APPEARANCE) && (
-        <div className="main-content">
-          <MobileSample
-            avatar={avatar}
-            styles={styles}
-            title={title}
-            links={links}
-            shops={shops}
-            bgColor={bgColor}
-            updateLinkClick={updateLinkClick}
+    <div className="main-content">
+      {/* Mobile Preview Panel */}
+      <MobileSample />
+
+      <div className="link-details">
+        {!isAppearance && (
+          <Profile
+            onImageChange={handleImageChange}
+            saveHandler={saveHandler}
           />
+        )}
 
-          <div className="link-details">
-            {/* Profile Section */}
-            {(currentTab === TAB_LINKS.LINKS || !currentTab) && (
-              <Profile
-                avatar={avatar}
-                setAvatar={setAvatar}
-                onImageChange={handleImageChange}
-                title={title}
-                setTitle={setTitle}
-                links={links}
-                setLinks={setLinks}
-                shops={shops}
-                setShops={setShops}
-                bgColor={bgColor}
-                setBgColor={setBgColor}
-                customColor={customColor}
-                setCustomColor={setCustomColor}
-                bio={bio}
-                setBio={setBio}
-                saveHandler={saveHandler}
-                // isChecked2={isChecked2}
-                setIsChecked2={setIsChecked2}
-              />
-            )}
-
-            {/* Appearance Section (Pass styles + setStyles to allow modifications) */}
-            {currentTab === TAB_LINKS.APPEARANCE && (
-              <Appearance
-                styles={styles}
-                setStyles={setStyles}
-                saveHandler={saveHandler}
-              />
-            )}
-          </div>
-        </div>
-      )}
-
-      <div>
-        {currentTab === TAB_LINKS.ANALYTICS && <AnalyticsPage />}
-        {currentTab === TAB_LINKS.SETTINGS && <Settings />}
+        {isAppearance && (
+          <Appearance
+            saveHandler={saveHandler}
+          />
+        )}
       </div>
-    </>
+    </div>
   );
 };
 

@@ -1,72 +1,46 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { AiOutlineArrowRight, AiOutlineLinkedin, AiOutlineGithub } from "react-icons/ai";
 
 const Footer = () => {
     return (
         <footer className="footer">
-            <div className="footer-content">
-                <div className="footer-buttons">
-                    <Link to="/login">
-                        <button className="login-btn">Log in</button>
-                    </Link>
-                    <Link to="/signup">
-                        <button className="signup-btn">Sign up free</button>
-                    </Link>
+            <div className="footer-top">
+                <div className="footer-info">
+                    <h3>Contact Us</h3>
+                    <p>hello@myspark.com</p>
+                    <p>+1 234 567 890</p>
+                    <p style={{ marginTop: '1rem', color: '#0000007f' }}>Website by SPARK Team © 2026</p>
                 </div>
-                <div className="footer-links">
-                    <div>
-                        <p>About Spark</p>
-                        <p>Blog</p>
-                        <p>Press</p>
-                        <p>Social Good</p>
-                        <p>Contact</p>
-                    </div>
-                    <div>
-                        <p>Careers</p>
-                        <p>Getting Started</p>
-                        <p>Features and How-Tos</p>
-                        <p>FAQs</p>
-                        <p>Report a Violation</p>
-                    </div>
-                    <div>
-                        <p>Terms and Conditions</p>
-                        <p>Privacy Policy</p>
-                        <p>Cookie Notice</p>
-                        <p>Trust Center</p>
-                    </div>
+
+                <div className="footer-btns">
+                    <button style={{ background: '#000000', color: '#fff', padding: '14px 28px', marginBottom: '1rem', border: 'none', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontWeight: '800' }}>
+                        View the plan <AiOutlineArrowRight />
+                    </button>
+                    <button style={{ background: '#fff', border: '2px solid #000000', color: '#000000', padding: '14px 28px', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontWeight: '800' }}>
+                        Speak to our team <AiOutlineArrowRight />
+                    </button>
                 </div>
             </div>
 
-            <div className='bottom'>
-                <p className="acknowledgment">
-                    Built with passion, powered by ideas, and driven by community.
-                    This space is more than just a website. It's where connections spark, creativity flows, and possibilities grow.
-                    Thanks for being part of the journey!      </p>
+            <h1 className="footer-main-text">SHAPING OUR OWN FUTURE</h1>
 
-                {/* Replace with appropriate social media icons */}
-
-                <div className="social-icons">
-                    <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
-                        <img src="icons/twitter.svg" alt="Twitter" />
-                    </a>
-                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-                        <img src="icons/instagram.svg" alt="Instagram" />
-                    </a>
-                    <a href="https://youtube.com" target="_blank" rel="noopener noreferrer">
-                        <img src="icons/youtube.svg" alt="YouTube" />
-                    </a>
-                    <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer">
-                        <img src="icons/tiktok.svg" alt="TikTok" />
-                    </a>
-                    <a href="https://spark.com" target="_blank" rel="noopener noreferrer">
-                        <img src="icons/spark.svg" alt="Spark" />
-                    </a>
-                </div>
-
+            <div className="footer-badges">
+                <div className="badge">Youth</div>
+                <div className="badge">Growth</div>
+                <div className="badge : badge-white">Net Zero</div>
+                <div className="badge">Place</div>
+                <div className="badge : badge-white">Scale</div>
             </div>
 
+            <div style={{ display: 'flex', gap: '2rem', justifyContent: 'center', marginTop: '6rem', fontSize: '2.5rem', color: '#000000' }}>
+                <Link to="#"><AiOutlineLinkedin /></Link>
+                <Link to="#"><AiOutlineGithub /></Link>
+            </div>
         </footer>
     );
 };
+
+// Simplified Link wrapper for Footer logic (internal usage)
+const Link = ({ children, to }) => <a href={to} style={{ color: 'inherit' }}>{children}</a>;
 
 export default Footer;

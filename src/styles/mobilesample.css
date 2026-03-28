@@ -1,211 +1,355 @@
-/* --- Mobile Preview Component - Modernized --- */
+/* --- Mobile Preview Component - Premium Device UI --- */
 
-.mobile-sample {
-  width: 40vw;
+.mobile-sample-wrapper {
+  width: 400px;
+  flex-shrink: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: var(--space-xl);
-  background: var(--accent);
+  padding: 2rem;
+  background: var(--surface);
   border-right: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  height: calc(100vh - 72px);
+  overflow: hidden;
 }
 
-.mobile-container {
+/* ── Phone Frame ── */
+.mobile-device {
   width: 290px;
-  height: 600px;
-  border-radius: 44px;
-  border: 12px solid #1a1a1a;
-  background-color: var(--background);
-  overflow: hidden;
+  height: 580px;
+  background: var(--background);
+  border-radius: 40px;
+  border: 10px solid #1a1a1a;
   position: relative;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  box-shadow: 0 40px 100px -20px rgba(0,0,0,0.3);
   display: flex;
   flex-direction: column;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-/* Phone Notch / Speaker placeholder */
-.mobile-container::after {
-  content: '';
+/* ── Notch ── */
+.device-notch {
   position: absolute;
   top: 0;
   left: 50%;
   transform: translateX(-50%);
   width: 100px;
-  height: 20px;
+  height: 24px;
   background: #1a1a1a;
-  border-bottom-left-radius: 12px;
-  border-bottom-right-radius: 12px;
-  z-index: 10;
+  border-bottom-left-radius: 18px;
+  border-bottom-right-radius: 18px;
+  z-index: 50;
 }
 
-.mobile-header {
+/* ── Header Background ── */
+.mobile-header-bg {
   position: relative;
-  background-color: var(--primary);
   text-align: center;
-  padding: var(--space-xl) var(--space-md) var(--space-lg);
-  width: 100%;
-  height: auto;
-  min-height: 180px;
-}
-
-.share-icon {
-  position: absolute;
-  top: var(--space-lg);
-  right: var(--space-lg);
-  font-size: 1.2rem;
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(4px);
-  color: white;
-  border-radius: var(--radius-full);
-  padding: 6px;
-  cursor: pointer;
-  z-index: 5;
-}
-
-.mobile-avatar {
-  width: 72px;
-  height: 72px;
-  border-radius: var(--radius-full);
-  border: 2px solid white;
-  box-shadow: var(--shadow-md);
-  object-fit: cover;
-  margin-top: var(--space-sm);
-}
-
-.profile-section h2 {
-  color: white;
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin-top: var(--space-sm);
-  margin-bottom: 2px;
-}
-
-.profile-section p {
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 0.8rem;
-}
-
-/* Tabs Toggle inside Mobile */
-.tab-toggle {
-  width: 85%;
-  margin: var(--space-md) auto;
-  display: flex;
-  background: var(--accent);
-  border-radius: var(--radius-full);
-  padding: 3px;
-}
-
-.tab-toggle button {
-  flex: 1;
-  padding: 6px;
-  border: none;
-  border-radius: var(--radius-full);
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--text-muted);
-}
-
-.tab-toggle .active {
-  background-color: var(--primary);
-  color: white;
-  box-shadow: var(--shadow-sm);
-}
-
-/* Links List in Mobile */
-.m-links-section {
-  flex: 1;
-  width: 90%;
-  margin: 0 auto;
-  overflow-y: auto;
-  padding: var(--space-sm) 0;
-  scrollbar-width: none;
-}
-
-.m-links-section::-webkit-scrollbar {
-  display: none;
-}
-
-.link-item {
-  background-color: var(--accent);
-  padding: var(--space-md);
-  border-radius: var(--radius-md);
-  margin-bottom: var(--space-sm);
-  text-align: center;
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: var(--primary);
-  border: 1px solid transparent;
-  transition: all 0.2s ease;
-}
-
-.link-item:hover {
-  transform: scale(1.02);
-  border-color: var(--primary-light);
-  box-shadow: var(--shadow-sm);
-}
-
-/* Footer in Mobile */
-.mobile-footer {
-  padding: var(--space-lg);
-  background: var(--surface);
-  border-top: 1px solid var(--border);
+  padding: 42px 16px 20px;
+  min-height: 190px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-xs);
+  justify-content: center;
+  transition: background-color 0.4s ease;
+  clip-path: ellipse(120% 100% at 50% 0%);
 }
 
-.connect-button {
-  background-color: var(--primary);
-  color: white;
-  padding: var(--space-sm) var(--space-xl);
-  width: 90%;
+.mobile-share-btn {
+  position: absolute;
+  top: 34px;
+  right: 18px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.3);
   border-radius: var(--radius-full);
-  font-size: 0.9rem;
-  font-weight: 700;
-  box-shadow: var(--shadow-md);
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
 }
 
-.mobile-logo-text {
-  font-size: 0.75rem;
+.mobile-share-btn:hover {
+  background: rgba(255, 255, 255, 0.35);
+  transform: scale(1.1);
+}
+
+.mobile-profile-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 10px;
+}
+
+.mobile-avatar {
+  width: 76px;
+  height: 76px;
+  border-radius: var(--radius-full);
+  border: 3px solid #fff;
+  background: #fff;
+  object-fit: cover;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+}
+
+.mobile-profile-info h2 {
+  color: #fff;
+  font-size: 1.05rem;
+  font-weight: 800;
+  margin: 0;
+  letter-spacing: -0.01em;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* ── Tabs Toggle ── */
+.mobile-tabs {
+  padding: 12px 16px;
+  display: flex;
+  gap: 10px;
+  background: transparent;
+  width: 100%;
+}
+
+.mobile-tab-btn {
+  flex: 1;
+  padding: 8px 16px;
+  font-size: 0.8rem;
   font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  margin: 0 !important; /* Overwrite card margin */
+  min-height: 42px !important;
+}
+
+/* ── Scrollable Content Area ── */
+.mobile-content-scroll {
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: none;
+  padding-bottom: 20px;
+}
+
+.mobile-content-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── Link Card (Base) ── */
+.mobile-link-card, .mobile-connect-btn, .mobile-tab-btn {
+  padding: 12px 16px;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  overflow: visible; /* For shadows/glows */
+  margin: 0 16px 12px;
+  width: auto !important;
+  border: none;
+  font-weight: 700;
+  background-color: var(--btn-color);
+  color: var(--btn-font-color);
+}
+
+.mobile-link-card:active {
+  transform: scale(0.96);
+}
+
+/* ──── FILL STYLES ──── */
+.fill-square { border-radius: 0; }
+.fill-rounded { border-radius: 12px; }
+.fill-outline-shadow { 
+  border-radius: 40px; 
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+  border: 1.5px solid rgba(255,255,255,0.2) !important;
+}
+
+/* ──── OUTLINE STYLES ──── */
+.outline-square, .outline-rounded, .outline-circle {
+  background-color: transparent !important;
+  border: 2px solid var(--btn-color) !important;
+  color: var(--btn-color) !important;
+}
+.outline-square { border-radius: 0; }
+.outline-rounded { border-radius: 12px; }
+.outline-circle { border-radius: 40px; }
+
+/* ──── SHADOW STYLES ──── */
+.hard-shadow-square, .hard-shadow-rounded, .hard-shadow-circle {
+  background-color: var(--btn-color);
+  color: var(--btn-font-color);
+  border: 2px solid #000 !important;
+  box-shadow: 4px 4px 0px #000;
+}
+.hard-shadow-square { border-radius: 0; }
+.hard-shadow-rounded { border-radius: 12px; }
+.hard-shadow-circle { border-radius: 40px; }
+
+.soft-shadow-square, .soft-shadow-rounded, .soft-shadow-circle {
+  background-color: #ffffff !important;
+  color: var(--btn-color) !important;
+  box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1);
+}
+.soft-shadow-square { border-radius: 0; }
+.soft-shadow-rounded { border-radius: 12px; }
+.soft-shadow-circle { border-radius: 40px; }
+
+/* ──── 6 NEW SPECIAL STYLES ──── */
+
+/* 1. GLASSMORPH */
+.special-glass {
+  background: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+}
+
+/* 2. NEON GLOW */
+.special-neon {
+  background-color: transparent !important;
+  border: 2px solid var(--btn-color) !important;
+  color: var(--btn-color) !important;
+  border-radius: 40px;
+  box-shadow: 0 0 10px var(--btn-color), inset 0 0 5px var(--btn-color);
+  text-shadow: 0 0 5px var(--btn-color);
+}
+
+/* 3. 3D POP */
+.special-3d {
+  background-color: var(--btn-color);
+  border-radius: 12px;
+  border-bottom: 5px solid rgba(0,0,0,0.3) !important;
+  transform: translateY(-2px);
+}
+.special-3d:active {
+  transform: translateY(2px);
+  border-bottom-width: 1px !important;
+}
+
+/* 4. WAVY ORGANIC */
+.special-wavy {
+  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+  background-color: var(--btn-color);
+}
+
+/* 5. MESH GRADIENT */
+.special-mesh {
+  background-image: radial-gradient(at 0% 0%, var(--btn-color) 0, transparent 50%), 
+                    radial-gradient(at 50% 0%, #ffffff33 0, transparent 50%), 
+                    radial-gradient(at 100% 0%, var(--btn-color) 0, transparent 50%) !important;
+  background-color: var(--btn-color);
+  border-radius: 12px;
+}
+
+/* 6. HAND-SKETCHED */
+.special-sketch {
+  background: transparent !important;
+  color: var(--btn-color) !important;
+  border: 2px solid var(--btn-color) !important;
+  border-radius: 4px;
+  box-shadow: 3px 3px 0px var(--btn-color);
+}
+.special-sketch::before {
+  content: "";
+  position: absolute;
+  inset: -5px;
+  border: 1px dashed var(--btn-color);
+  border-radius: 6px;
+  opacity: 0.4;
+}
+
+/* Grid Layout Refinements */
+.mobile-link-card.is-grid {
+  flex-direction: column;
+  height: auto;
+  padding: 16px 10px;
+  margin: 0; /* Handled by grid-gap */
+  min-height: 100px;
+}
+
+.mobile-link-card.is-grid .card-thumb {
+  width: 50px;
+  height: 50px;
+  margin-right: 0;
+  margin-bottom: 10px;
+}
+
+.mobile-link-card.is-grid .card-info {
+  padding-right: 0;
+}
+
+.no-content {
+  text-align: center;
+  padding: 50px 20px;
   color: var(--text-muted);
-  letter-spacing: 1px;
+  font-size: 0.8rem;
+  font-style: italic;
+  opacity: 0.7;
 }
 
-/* Responsive adjustments for the main dashboard */
-@media (max-width: 1024px) {
-  .mobile-sample { display: none; }
+/* ── Footer ── */
+.mobile-device-footer {
+  padding: 20px 16px 24px;
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
 }
 
-/* --- PREVIEW MODE (Public View) --- */
-.mobile-sample.is-preview {
+.mobile-connect-btn {
+  width: 100%;
+  padding: 10px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-align: center;
+  border: none;
+}
+
+.spark-brand {
+  font-family: var(--font-bold);
+  font-size: 0.75rem;
+  font-weight: 900;
+  color: var(--text-muted);
+  letter-spacing: 2px;
+  opacity: 0.5;
+}
+
+/* ── Preview Mode ── */
+.mobile-sample-wrapper.is-preview {
   width: 100vw;
   height: 100vh;
-  padding: 0;
-  display: flex !important;
-  justify-content: center;
-  align-items: center;
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
   background: var(--background);
   border: none;
 }
 
-.mobile-container.is-preview {
+.mobile-sample-wrapper.is-preview .mobile-device {
   width: 100%;
-  max-width: 500px;
-  height: 100vh;
-  margin: 0 auto;
-  border: none;
+  max-width: 450px;
+  height: 100%;
   border-radius: 0;
+  border: none;
   box-shadow: none;
 }
 
-.mobile-container.is-preview::after {
-  display: none;
-}
-
-@media (max-width: 600px) {
-  .mobile-container.is-preview {
-    max-width: 100%;
+/* ── RESPONSIVE ── */
+@media (max-width: 1024px) {
+  .mobile-sample-wrapper {
+    display: none;
   }
 }

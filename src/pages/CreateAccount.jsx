@@ -34,25 +34,32 @@ const CreateAccount = ({ updateHandler, formData, setFormData }) => {
   };
 
   // Validate Form
-  const validateForm = (data) => {
+  const validateForm = (data, isSubmit = false) => {
     const newErrors = {};
 
-    if (!data.f_name || data.f_name.length < 3) newErrors.f_name = " name required*";
-    if (!emailRegex.test(data.email)) newErrors.email = "Invalid Email*";
+    if (!data.f_name || data.f_name.trim().length < 3) {
+      if (isSubmit || touchedFields.f_name) newErrors.f_name = "First name is required (min 3 chars)*";
+    }
+
+    if (!data.email) {
+      if (isSubmit || touchedFields.email) newErrors.email = "Email is required*";
+    } else if (!emailRegex.test(data.email)) {
+      if (isSubmit || touchedFields.email) newErrors.email = "Invalid Email format*";
+    }
+
     if (!data.password) {
-      newErrors.password = "Please enter your password*";
+      if (isSubmit || touchedFields.password) newErrors.password = "Password is required*";
     } else if (!passwordRegex.test(data.password)) {
-      newErrors.password =
-        "The password must be at least 8 characters long* and include at least 1 uppercase, lowercase, number, and special character (@$!%*?&)*";
+      if (isSubmit || touchedFields.password) newErrors.password = "Password must be at least 8 chars with uppercase, lowercase, number, and special char*";
     }
 
     if (!data.confirmPassword) {
-      newErrors.confirmPassword = "Please confirm your password*";
+      if (isSubmit || touchedFields.confirmPassword) newErrors.confirmPassword = "Confirm password is required*";
     } else if (data.password !== data.confirmPassword) {
-      newErrors.confirmPassword = "Password did not match*";
+      if (isSubmit || touchedFields.confirmPassword) newErrors.confirmPassword = "Passwords do not match*";
     }
 
-    if (!data.agree) {
+    if (!data.agree && isSubmit) {
       newErrors.agree = "You must agree to the terms*";
     }
 

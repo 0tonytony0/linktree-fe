@@ -11,7 +11,7 @@ const IntegrationCard = () => {
 
   return (
     <section className="integration-section">
-      <h1>All Link Apps and Integrations</h1>
+      <h1 style={{ color: "white" }}>All Link Apps and Integrations</h1>
       <div className="integration-grid">
         {integrations.map((integration, index) => (
           <div key={index} className="integration-card">

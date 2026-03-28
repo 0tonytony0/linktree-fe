@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 const InfoCard = ({ title, description, buttonText, image, }) => {
@@ -12,7 +12,9 @@ const InfoCard = ({ title, description, buttonText, image, }) => {
           <button className="cta-button">{buttonText}</button>
         </Link>
       </div>
-      <img src={image} alt="Dashboard Preview" className="info-image" />
+      <div className="info-image">
+        <img src={image} alt="Dashboard Preview" />
+      </div>
     </div>
   );
 };

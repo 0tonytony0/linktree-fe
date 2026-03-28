@@ -1,182 +1,186 @@
-/* --- Create Account Page - Modern Split Screen --- */
+/* --- Create Account - Premium Form Layout --- */
 
 .create-account-wrapper {
   display: flex;
-  height: 100vh;
-  width: 100vw;
+  flex: 1;
+  height: 100%;
+  width: 100%;
   background-color: var(--background);
-  overflow: hidden;
+  overflow-y: auto;
+  position: relative;
 }
 
-/* Left Section: Registration Form */
+/* Left: Form */
 .acc-left-section {
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: var(--space-xl);
-  background: var(--surface);
+  padding: 4rem 3rem;
+  width: 100%;
   position: relative;
-  overflow-y: auto;
 }
 
+/* Logo */
 .spark-logo {
   position: absolute;
-  top: var(--space-lg);
-  left: var(--space-lg);
+  top: 2rem;
+  left: 2rem;
   width: 100px;
-  filter: drop-shadow(var(--shadow-sm));
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.08));
 }
 
+/* Title */
+.title {
+  font-family: var(--font-bold) !important;
+  font-size: 2rem !important;
+  font-weight: 800 !important;
+  color: var(--primary) !important;
+  margin-bottom: 1.5rem !important;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1.2;
+}
+
+/* Card wrapper */
 .account-container {
   width: 100%;
-  max-width: 440px;
-  animation: fadeIn 0.6s ease-out;
+  max-width: 420px;
+  animation: fadeIn 0.5s ease-out;
 }
 
 .account-header {
-  text-align: center;
-  margin-bottom: var(--space-xl);
-}
-
-.account-header h1 {
-  font-family: var(--font-premium);
-  font-size: 2.25rem;
-  color: var(--primary);
-  margin-bottom: var(--space-xs);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
 }
 
 .account-header h3 {
-  color: var(--text-muted);
+  font-family: var(--font-main);
   font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: none;
+  letter-spacing: 0;
 }
 
 .signin-link {
-  color: var(--primary-light);
-  font-weight: 600;
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 0.875rem;
   text-decoration: none;
-  margin-left: var(--space-xs);
+  border: 1.5px solid var(--primary);
+  padding: 4px 14px;
+  border-radius: var(--radius-full);
+  transition: all 0.2s ease;
 }
 
 .signin-link:hover {
-  text-decoration: underline;
+  background-color: var(--primary);
+  color: white;
 }
 
+/* Form */
 .account-form {
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
+  gap: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .form-group input {
   width: 100%;
-  padding: var(--space-md);
+  padding: 13px 16px;
   background: var(--accent);
-  border: 1px solid var(--border);
+  border: 1.5px solid var(--border);
   border-radius: var(--radius-md);
-  font-size: 0.95rem;
+  font-size: 0.9rem;
+  font-family: var(--font-main);
+  color: var(--text-main);
   transition: all 0.2s ease;
 }
 
 .form-group input:focus {
-  background: var(--surface);
-  border-color: var(--primary-light);
-  box-shadow: 0 0 0 4px rgba(57, 91, 100, 0.1);
+  background: var(--background);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(40,162,99,0.1);
+  outline: none;
 }
 
 .form-group input.error {
-  border-color: var(--error);
-  background: rgba(214, 48, 49, 0.05);
+  border-color: #ef4444;
+  background: rgba(239,68,68,0.04);
 }
 
 .error-text {
-  color: var(--error);
-  font-size: 0.75rem;
-  margin-top: var(--space-xs);
+  color: #ef4444;
+  font-size: 0.76rem;
   font-weight: 500;
+  padding-left: 4px;
 }
 
+/* Checkbox */
 .checkbox-group {
   display: flex;
   align-items: flex-start;
-  gap: var(--space-sm);
-  font-size: 0.85rem;
+  gap: 10px;
+  font-size: 0.82rem;
   color: var(--text-muted);
-  margin: var(--space-md) 0;
+  margin: 0.5rem 0;
 }
 
-.checkbox-group input {
-  margin-top: 3px;
+.checkbox-group input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+  accent-color: var(--primary);
+  flex-shrink: 0;
 }
 
 .checkbox-group a {
-  color: var(--primary-light);
+  color: var(--primary);
   font-weight: 600;
 }
 
+/* Submit Button */
 .create-acc {
   width: 100%;
-  padding: var(--space-md);
+  padding: 13px;
   background: var(--primary);
-  color: var(--background);
+  color: #ffffff;
   border-radius: var(--radius-full);
   font-size: 1rem;
-  font-weight: 600;
-  box-shadow: var(--shadow-md);
-  margin-top: var(--space-md);
+  font-weight: 700;
+  box-shadow: 0 4px 14px rgba(40,162,99,0.28);
+  margin-top: 0.5rem;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
 }
 
 .create-acc:hover:not(:disabled) {
-  background: var(--primary-light);
+  background: var(--primary-dark);
   transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 6px 18px rgba(40,162,99,0.3);
 }
 
 .create-acc:disabled {
-  background: var(--text-muted);
-  opacity: 0.5;
+  background: #d1d5db;
+  color: #9ca3af;
   cursor: not-allowed;
-}
-
-/* Right Section: Visual / Image */
-.right-section {
-  width: 35%;
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.right-section::before {
-  content: '';
-  position: absolute;
-  width: 150%;
-  height: 150%;
-  background: radial-gradient(circle, rgba(165, 201, 202, 0.12) 0%, transparent 70%);
-  animation: rotate 25s linear infinite;
-}
-
-/* Animations */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(15px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes rotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  box-shadow: none;
+  transform: none;
 }
 
 /* Responsive */
-@media (max-width: 1024px) {
-  .right-section { width: 30%; }
-}
-
 @media (max-width: 768px) {
-  .right-section { display: none; }
-  .acc-left-section { padding: var(--space-xl) var(--space-md); }
-  .spark-logo { position: static; margin-bottom: var(--space-xl); }
+  .acc-left-section { padding: 3rem 1.5rem; }
+  .spark-logo { position: static; margin: 0 auto 2rem; display: block; }
 }

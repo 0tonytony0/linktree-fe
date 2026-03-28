@@ -1,165 +1,111 @@
-/* --- Import Modern Typography --- */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
+/* --- Design System - Emerald Green & White --- */
 
-/* --- Design System Tokens --- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Outfit:wght@700;800;900&display=swap');
+
 :root {
-  /* Colors - Light Theme (Default) */
-  --primary: #2C3333;
-  --primary-light: #395B64;
-  --secondary: #A5C9CA;
-  --accent: #E7F6F2;
-  --background: #F8F9FA;
-  --surface: #FFFFFF;
-  --text-main: #2D3436;
-  --text-muted: #636E72;
-  --success: #00B894;
-  --error: #D63031;
-  --warning: #FDCB6E;
-  --border: #E9ECEF;
-  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
-  --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.12);
+  /* ── Color Palette ── */
+  --primary: #28A263;
+  --primary-light: #4ADE80;
+  --primary-dark: #166534;
+  --primary-subtle: #DCFCE7;
 
-  /* Spacing Tokens */
-  --space-xs: 0.25rem;
-  --space-sm: 0.5rem;
-  --space-md: 1rem;
-  --space-lg: 1.5rem;
-  --space-xl: 2rem;
+  --background: #FFFFFF;
+  --surface: #F9FAFB;
+  --accent: #F3F4F6;
 
-  /* Border Radii */
-  --radius-sm: 4px;
-  --radius-md: 12px;
-  --radius-lg: 20px;
-  --radius-full: 9999px;
+  --text-main: #111827;
+  --text-muted: #6B7280;
+  --border: #E5E7EB;
 
-  /* Typography */
-  --font-main: 'Poppins', system-ui, -apple-system, sans-serif;
+  /* ── Shadows ── */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.07);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+  --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
+
+  /* ── Typography ── */
+  --font-main: 'Poppins', sans-serif;
+  --font-bold: 'Outfit', sans-serif;
   --font-premium: 'Outfit', sans-serif;
+
+  /* ── Spacing ── */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+
+  /* ── Border Radius ── */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-full: 9999px;
 }
 
-/* --- Dark Mode Support --- */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --primary: #E7F6F2;
-    --primary-light: #A5C9CA;
-    --secondary: #395B64;
-    --background: #0F1111;
-    --surface: #1E2020;
-    --text-main: #F1F2F6;
-    --text-muted: #A4B0BE;
-    --border: #2F3542;
-    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2);
-    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3);
-    --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.4);
-  }
-}
-
-/* --- Global Reset & Base Styles --- */
-* {
+/* ── Global Reset ── */
+*, *::before, *::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  -webkit-font-smoothing: antialiased;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
 }
 
 body {
-  background-color: var(--background);
-  color: var(--text-main);
   font-family: var(--font-main);
+  background: var(--background);
+  color: var(--text-main);
   line-height: 1.6;
-  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* --- Smooth Transitions --- */
-* {
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-/* --- Common Layout Elements --- */
-.container {
+#root {
   width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 var(--space-md);
+  margin: 0;
+  padding: 0;
+  max-width: 100%;
 }
 
-/* --- Typography Scaling --- */
-h1 { font-family: var(--font-premium); font-weight: 700; font-size: 2.5rem; }
-h2 { font-family: var(--font-premium); font-weight: 600; font-size: 1.8rem; margin-bottom: var(--space-md); }
-h3 { font-family: var(--font-premium); font-weight: 600; font-size: 1.2rem; }
-
-/* --- Forms & Inputs --- */
-.input-field {
-  width: 100%;
-  padding: var(--space-md);
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  color: var(--text-main);
-  font-family: var(--font-main);
-  outline: none;
-  transition: all 0.2s ease;
+h1, h2, h3, h4 {
+  font-family: var(--font-bold);
+  letter-spacing: -0.01em;
+  line-height: 1.2;
 }
 
-.input-field:focus {
-  border-color: var(--primary-light);
-  box-shadow: 0 0 0 3px rgba(57, 91, 100, 0.1);
-}
-
-/* --- Buttons --- */
 button {
   cursor: pointer;
   border: none;
-  outline: none;
   font-family: var(--font-main);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-sm);
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.2s ease;
+  background: transparent;
 }
 
-button:active {
-  transform: scale(0.98);
+input, select, textarea {
+  font-family: var(--font-main);
+  font-size: 1rem;
 }
 
-.btn-primary {
-  background-color: var(--primary);
-  color: var(--background);
-  padding: var(--space-md) var(--space-xl);
-  border-radius: var(--radius-full);
-  font-weight: 600;
+a {
+  text-decoration: none;
+  color: inherit;
 }
 
-/* --- Glassmorphism Card Utility --- */
-.glass-card {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
+/* ── Utility Animations ── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-@media (prefers-color-scheme: dark) {
-  .glass-card {
-    background: rgba(30, 32, 32, 0.7);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-  }
+@keyframes fadeInScale {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
 }
 
-/* --- Utility Classes --- */
-.text-right { text-align: right; }
-.text-center { text-align: center; }
-.hidden { display: none; }
-.mt-1 { margin-top: var(--space-xs); }
-.mt-4 { margin-top: var(--space-md); }
-.ml-4 { margin-left: var(--space-md); }
-.text-xs { font-size: 0.75rem; }
-
-/* --- Responsive Adjustments --- */
-@media (max-width: 768px) {
-  h1 { font-size: 2rem; }
-  h2 { font-size: 1.5rem; }
-  .container { padding: 0 var(--space-sm); }
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
 }

@@ -10,7 +10,11 @@ export const login = async (username, password) => {
     },
     body: { username, password },
   }).then((data) => {
-    localStorage.setItem("token", data.token);
+    // Get token from the response structure correctly
+    const token = data.data?.data?.token || data.data?.token || data.token;
+    if (token) {
+      localStorage.setItem("token", token);
+    }
     return data;
   });
 };

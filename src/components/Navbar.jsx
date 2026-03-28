@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import "../styles/navbar.css";
 import {
   AiOutlineHome,
@@ -7,59 +7,43 @@ import {
   AiOutlineSetting,
   AiOutlineUser,
 } from "react-icons/ai";
-import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+
+const navLinks = [
+  { path: "/main/links", label: "Links", icon: <AiOutlineHome /> },
+  { path: "/main/appearance", label: "Appearance", icon: <AiOutlineBgColors /> },
+  { path: "/main/analytics", label: "Analytics", icon: <AiOutlineBarChart /> },
+  { path: "/main/settings", label: "Settings", icon: <AiOutlineSetting /> },
+];
 
 const Navbar = () => {
   const userName = useSelector((state) => state.user.username);
-
-  const location = useLocation();
-  const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState("links");
-
-  // Update active tab on location changea
-  useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    setActiveTab(params.get("tab") || "links");
-  }, [location]);
-
-  const navLinks = [
-    { tab: "links", label: "Links", icon: <AiOutlineHome /> },
-    { tab: "appearance", label: "Appearance", icon: <AiOutlineBgColors /> },
-    { tab: "analytics", label: "Analytics", icon: <AiOutlineBarChart /> },
-    { tab: "settings", label: "Settings", icon: <AiOutlineSetting /> },
-  ];
-
-  // Handle navigation and set active tab
-  const handleNavClick = (tab) => {
-    navigate(`/main?tab=${tab}`);
-    setActiveTab(tab);
-  };
 
   return (
     <div className="navbar">
       {/* Logo */}
       <div className="navbar-logo">
-        <img src="images/spark.svg" alt="Spark Logo" className="logo-image" />
+        <img src="/images/spark.svg" alt="Spark Logo" className="logo-image" />
       </div>
 
       {/* Sidebar Links */}
       <nav className="navbar-links">
-        {navLinks?.map((link) => (
-          <div
-            key={link.tab}
-            className={`nav-link ${activeTab === link.tab ? "active" : ""}`}
-            onClick={() => handleNavClick(link.tab)}
+        {navLinks.map((link) => (
+          <NavLink
+            key={link.path}
+            to={link.path}
+            className={({ isActive }) => `nav-link${isActive ? " active" : ""}`}
           >
-            {link.icon} {link.label}
-          </div>
+            {link.icon}
+            <span>{link.label}</span>
+          </NavLink>
         ))}
       </nav>
 
-      {/* Username at the Bottom */}
+      {/* Username at Bottom */}
       <div className="navbar-user">
         <AiOutlineUser className="user-icon" />
-        <span>{userName}</span>
+        <span>{userName || "Profile"}</span>
       </div>
     </div>
   );

@@ -1,31 +1,27 @@
-import React, { useState, useCallback } from "react";
-import { useSelector } from "react-redux";
+import React, { useState, useCallback, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { 
+  updateTitle, 
+  updateBio, 
+  updateLinks, 
+  updateShops,
+  updateAvatar,
+  updateBanner
+} from "../store/profileSlice";
 
 import ProfileHeader from "./profile/ProfileHeader";
 import LinkManager from "./profile/LinkManager";
 import ProfileBanner from "./profile/ProfileBanner";
 import ProfileModal from "./profile/ProfileModal";
 
-const Profile = ({
-  avatar,
-  setAvatar,
-  onImageChange,
-  title,
-  setTitle,
-  links,
-  setLinks,
-  shops,
-  setShops,
-  bio,
-  setBio,
-  bgColor,
-  setBgColor,
-  customColor,
-  setCustomColor,
-  saveHandler,
-}) => {
+const Profile = ({ onImageChange, saveHandler }) => {
+  const dispatch = useDispatch();
   const userName = useSelector((state) => state.user.username);
+  const profile = useSelector((state) => state.profile);
+  
+  const { title, bio, links, shops, avatar, bgColor, customColor } = profile;
+
   const [bioCharCount, setBioCharCount] = useState(bio?.length || 0);
   const [activeTab, setActiveTab] = useState("link");
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -33,21 +29,26 @@ const Profile = ({
   const [editingIndex, setEditingIndex] = useState(null);
   const [newItemName, setNewItemName] = useState("");
   const [newItemURL, setNewItemURL] = useState("");
+  const [newItemImage, setNewItemImage] = useState("");
   const [isChecked, setIsChecked] = useState(false);
   const [itemError, setItemError] = useState("");
 
   const presetColors = ["#3B312C", "#FFFFFF", "#000000"];
 
-  // ✅ Bio Handler
+  // Sync char count when bio changes from Redux
+  useEffect(() => {
+    setBioCharCount(bio?.length || 0);
+  }, [bio]);
+
+  // Handle Bio Change
   const handleBioChange = (e) => {
     const text = e.target.value;
     if (text.length <= 80) {
-      setBio(text);
-      setBioCharCount(text.length);
+      dispatch(updateBio(text));
     }
   };
 
-  // ✅ Modal Controls
+  // Modal Controls
   const openModal = useCallback(
     (isEdit = false, index = null) => {
       setIsChecked(false);
@@ -59,9 +60,11 @@ const Profile = ({
         const currentItems = activeTab === "link" ? links : shops;
         setNewItemName(currentItems[index].name);
         setNewItemURL(currentItems[index].url);
+        setNewItemImage(currentItems[index].image || "");
       } else {
         setNewItemName("");
         setNewItemURL("");
+        setNewItemImage("");
       }
     },
     [activeTab, links, shops]
@@ -73,7 +76,7 @@ const Profile = ({
     setEditingIndex(null);
   }, []);
 
-  // ✅ Add or Edit Item
+  // Add or Edit Item
   const addItem = () => {
     if (!newItemName.trim() || !newItemURL.trim()) {
       toast.error("Both name and URL are required!");
@@ -83,6 +86,7 @@ const Profile = ({
     const newItem = {
       name: newItemName,
       url: newItemURL,
+      image: newItemImage,
       active: true,
       clicks: 0,
     };
@@ -91,43 +95,43 @@ const Profile = ({
 
     if (isEditMode && editingIndex !== null) {
       currentItems[editingIndex] = newItem;
-      toast.success("Item updated successfully!");
+      toast.success("Item updated! ✨");
     } else {
       const isDuplicate = currentItems.some(
         (item) => item.name === newItem.name && item.url === newItem.url
       );
       if (isDuplicate) {
-        toast.warning("Item already exists!");
+        toast.warning("Link already exists!");
         return;
       }
 
       currentItems.push(newItem);
-      toast.success("Item added successfully!");
+      toast.success("Item added! 🚀");
     }
 
     if (activeTab === "link") {
-      setLinks(currentItems);
+      dispatch(updateLinks(currentItems));
     } else {
-      setShops(currentItems);
+      dispatch(updateShops(currentItems));
     }
 
     setIsChecked(true);
+    closeModal();
   };
 
-  // ✅ Delete Item
+  // Delete Item
   const deleteItem = (index, type) => {
     if (type === "link") {
-      setLinks(links.filter((_, i) => i !== index));
+      dispatch(updateLinks(links.filter((_, i) => i !== index)));
     } else {
-      setShops(shops.filter((_, i) => i !== index));
+      dispatch(updateShops(shops.filter((_, i) => i !== index)));
     }
+    toast.info("Item removed.");
   };
 
   const shareItem = (url) => {
     if (navigator.share) {
-      navigator
-        .share({ title: "Check this out!", url })
-        .then(() => toast.success("Shared successfully"))
+      navigator.share({ title: "View this!", url })
         .catch((error) => console.error("Sharing failed", error));
     } else {
       navigator.clipboard.writeText(url);
@@ -136,14 +140,11 @@ const Profile = ({
   };
 
   const handlePresetColor = (color) => {
-    setBgColor(color);
-    setCustomColor(color);
+    dispatch(updateBanner(color));
   };
 
   const handleCustomColor = (e) => {
-    const newColor = e.target.value;
-    setCustomColor(newColor);
-    setBgColor(newColor);
+    dispatch(updateBanner(e.target.value));
   };
 
   const handleItemUrl = (val) => {
@@ -155,15 +156,15 @@ const Profile = ({
   return (
     <div className="profile-container">
       <div className="profile-title">
-        <h2>Profile</h2>
+        <h2>General Information</h2>
       </div>
 
       <ProfileHeader
         avatar={avatar}
         onImageChange={onImageChange}
-        removeImage={() => setAvatar(null)}
+        removeImage={() => dispatch(updateAvatar(null))}
         title={title}
-        setTitle={setTitle}
+        setTitle={(val) => dispatch(updateTitle(val))}
         bio={bio}
         handleBioChange={handleBioChange}
         bioCharCount={bioCharCount}
@@ -197,6 +198,8 @@ const Profile = ({
           setNewItemName={setNewItemName}
           newItemURL={newItemURL}
           handleItemUrl={handleItemUrl}
+          newItemImage={newItemImage}
+          setNewItemImage={setNewItemImage}
           isChecked={isChecked}
           addItem={addItem}
           itemError={itemError}

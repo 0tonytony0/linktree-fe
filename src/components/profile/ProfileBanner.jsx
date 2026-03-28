@@ -1,9 +1,19 @@
 import React from "react";
 
-const ProfileBanner = ({ bgColor, avatar, title, userName, presetColors, handlePresetColor, customColor, handleCustomColor, saveHandler }) => {
+const ProfileBanner = ({ 
+  bgColor, 
+  avatar, 
+  title, 
+  userName, 
+  presetColors, 
+  handlePresetColor, 
+  customColor, 
+  handleCustomColor, 
+  saveHandler 
+}) => {
   return (
     <div className="banner-section">
-      <h2>Banner</h2>
+      <h2>Profile Banner</h2>
       <div className="banner-container">
         {/* Banner Live Preview */}
         <div className="banner" style={{ backgroundColor: bgColor }}>
@@ -12,22 +22,23 @@ const ProfileBanner = ({ bgColor, avatar, title, userName, presetColors, handleP
             alt="Avatar"
             className="b-avatar"
           />
-          <h3 className="b-username">{title}</h3>
-          <p className="handle">🔥/{userName || "username"}</p>
+          <h3 className="b-username">{title || "@username"}</h3>
+          <p className="handle">spark.me/{userName || "username"}</p>
         </div>
 
         {/* Custom Background Color Section */}
         <div className="color-picker-section">
-          <h4>Custom Background Color</h4>
+          <h4>Background Color</h4>
 
           {/* Preset Colors */}
           <div className="preset-colors">
             {presetColors.map((color, index) => (
               <div
                 key={index}
-                className="color-circle"
+                className={`color-circle ${bgColor === color ? "active" : ""}`}
                 style={{ backgroundColor: color }}
                 onClick={() => handlePresetColor(color)}
+                title={color}
               ></div>
             ))}
           </div>
@@ -44,15 +55,18 @@ const ProfileBanner = ({ bgColor, avatar, title, userName, presetColors, handleP
               value={customColor}
               onChange={handleCustomColor}
               className="text-input"
+              placeholder="#000000"
             />
           </div>
         </div>
       </div>
 
       {/* Save Button */}
-      <button className="save-button" onClick={saveHandler}>
-        Save
-      </button>
+      <div className="save-container">
+        <button className="save-button" onClick={saveHandler}>
+          Save Profile
+        </button>
+      </div>
     </div>
   );
 };
